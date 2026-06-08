@@ -1,0 +1,36 @@
+services:
+  - type: worker
+    name: ip-marketing-bot
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ANTHROPIC_MODEL
+        value: claude-sonnet-4-6
+      - key: LOG_LEVEL
+        value: INFO
+      - key: ENVIRONMENT
+        value: production
+      - key: MARKETING_CHAT_IDS
+        sync: false
+      - key: ADMIN_CHAT_IDS
+        sync: false
+      - key: ADMIN_USER_IDS
+        sync: false
+      - key: BOT_USERNAME
+        sync: false
+      - key: GSHEET_ID
+        sync: false
+      - key: GOOGLE_CREDENTIALS_FILE
+        value: /etc/secrets/service_account.json
+      - key: KB_REFRESH_SECONDS
+        value: "600"

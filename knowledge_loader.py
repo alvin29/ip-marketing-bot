@@ -1,0 +1,82 @@
+"""Build the system prompt = master markdown + rules CSV.
+
+KB source priority:
+  1. Google Sheets (if configured + reachable) — cached with TTL
+  2. Local CSV fallback (knowledge_base/02_RULES_DATABASE.csv)
+
+The master prompt is always read from the local markdown file.
+"""
+from __future__ import annotations
+
+import logging
+import threading
+from functools import lru_cache
+from pathlib import Path
+
+import config
+
+logger = logging.getLogger(__name__)
+
+BASE_DIR = Path(__file__).parent
+KNOWLEDGE_DIR = BASE_DIR / "knowledge_base"
+
+MASTER_PROMPT_FILE = KNOWLEDGE_DIR / "11_COPY_PASTE_PROMPT.md"
+RULES_CSV_FILE = KNOWLEDGE_DIR / "02_RULES_DATABASE.csv"
+
+
+# Shared singleton — set by main.py at boot, used by claude_client.py.
+_sheets_singleton = None
+_singleton_lock = threading.Lock()
+
+
+def set_sheets_client(client) -> None:
+    """Inject the SheetsClient. Call once at startup if Sheets is enabled."""
+    global _sheets_singleton
+    with _singleton_lock:
+        _sheets_singleton = client
+
+
+def get_sheets_client():
+    return _sheets_singleton
+
+
+@lru_cache(maxsize=1)
+def _master_prompt() -> str:
+    return MASTER_PROMPT_FILE.read_text(encoding="utf-8")
+
+
+def _rules_csv_text() -> str:
+    """Return rules CSV text — preferring Sheets if available."""
+    client = get_sheets_client()
+    if client is not None:
+        try:
+            return client.kb_as_csv_text()
+        except Exception as exc:
+            logger.warning(
+                "Sheets read failed (%s) — falling back to local CSV.", exc
+            )
+    return RULES_CSV_FILE.read_text(encoding="utf-8")
+
+
+def get_full_system_prompt() -> str:
+    """Concatenate master prompt + CSV rules. Called per request (cheap)."""
+    prompt = _master_prompt()
+    rules_csv = _rules_csv_text()
+    source = "Google Sheets" if get_sheets_client() else "local CSV"
+    return (
+        f"{prompt}\n\n"
+        "## RULES DATABASE (CSV)\n"
+        f"Sumber data: {source}. Kolom: item, tier, container, price_per_cbm, hs_code_hint, "
+        "brand_surcharge_possible, ovw_rate, acceptance_status, special_notes, "
+        "packing_requirement, indonesia_regulation, china_export_note.\n\n"
+        "**PENTING — unknown item flagging:**\n"
+        "Kalau item yang ditanya benar-benar TIDAK ADA di database CSV "
+        "(bukan synonym dari item yang ada), tambahkan di akhir bagian "
+        "[UNTUK MARKETING] satu baris dengan format persis ini:\n"
+        "`[NEEDS_KB_ENTRY: nama_item_pendek]`\n"
+        "Jangan tampilkan baris ini di [FORWARD-READY]. Tetap kasih estimasi "
+        "best-effort berdasarkan item sejenis, dan flag escalate ke Alvin.\n\n"
+        "```csv\n"
+        f"{rules_csv}\n"
+        "```\n"
+    )

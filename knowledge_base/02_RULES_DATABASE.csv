@@ -1,0 +1,181 @@
+item,tier,price_per_cbm,hs_code_hint,brand_surcharge_possible,ovw_rate,acceptance_status,special_notes,packing_requirement,indonesia_regulation,china_export_note
+Plastik packaging,Umum 1,4500000,Chapter 39,N,5000,auto,Common base item,Standard,Permendag 22/2025 plastik hilir,Standard export
+Kursi (plastik),Umum 1,4500000,9401.80,N,5000,auto,Furniture light - check material,Standard,Permendag 23/2025 if branded,Standard
+Bola tenis,Umum 1,4500000,9506.61,N,5000,auto,Sports goods,Standard,Standard,Standard
+Karung,Umum 1,4500000,6305,N,5000,auto,Packaging material,Standard,Standard,Standard
+Peniti,Umum 1,4500000,8305,N,5000,auto,Small metal item,Standard,Standard,Standard
+Jepitan rambut,Umum 1,4500000,9615,N,5000,auto,Hair accessory,Standard,Standard,Standard
+Bulu mata palsu,Umum 1,4500000,6704,N,5000,auto,Different from lem bulu mata which is Lartas Berat,Standard,Standard,Standard
+Gantungan baju,Umum 1,4500000,3923/4421,N,5000,auto,Plastic or wood hanger,Standard,Standard,Standard
+Koper non baterai,Umum 1,4500000,4202,Y,5000,auto,Different from koper dengan baterai (Hot Items),Standard,Standard,Standard
+Botol plastik,Umum 1,4500000,3923,Y,5000,auto,Container plastic,Standard,Standard,Standard
+Botol tumblr,Umum 1,4500000,3924/3923,Y,5000,auto,Same as botol plastik,Standard,Standard,Standard
+Yoga mat karet,Umum 1,4500000,4016,N,5000,auto,Material rubber - vs kain version which is Semi Garment,Standard,Standard,Standard
+Payung,Umum 1,4500000,6601,N,5000,auto,Standard,Standard,Standard,Standard
+Solatipe,Umum 1,4500000,3919,N,5000,auto,Adhesive tape,Standard,Standard,Standard
+Mouse pad rubber,Umum 1,4500000,4016,N,5000,auto,Rubber material - vs kain Semi Garment,Standard,Standard,Standard
+Jam tangan non brand,Umum 1,4500000,9102,N,5000,auto,If branded use Brand surcharge - If nilai/CBM > 25jt reclass to Lartas 1,Standard,Standard,Standard
+Plastic protection film,Umum 1,4500000,3919/3920,N,5000,auto,OVW likely - dense material,Standard,Standard,Standard
+Tas,Umum 1,4500000,4202,Y,5000,auto,If branded use Brand surcharge,Standard,Permendag 23/2025 - SNI applies,Standard
+Artificial flower,Umum 1,4500000,6702,N,5000,auto,Decorative,Standard,Standard,Standard
+Sepatu (general),Umum 1,4500000,6403/6404,Y,5000,auto,Use case dependent - branded > Brand surcharge,Standard,Permendag 23/2025 alas kaki,Standard
+Stationery,Umum 1,4500000,3926.10/4820,N,5000,auto,Pencil case besi lapis plastik file as 3926.10,Standard,Standard,Standard
+Kacamata fashion non prescription,Umum 1,4500000,9004.90.90,Y,5000,auto,Non-lartas vs prescription which is Kosmetik Makanan 8jt,Standard,Standard,Standard
+Mainan craft material,Umum 1,4500000,Various,N,5000,auto,Raw craft material not finished toy,Standard,Standard,Standard
+Pulpen,Umum 1,4500000,9608,Y,5000,auto,Brand surcharge if applicable,Standard,Standard,Standard
+Lilin,Umum 1,4500000,3406,N,5000,auto,Candle,Standard,Standard,Standard
+Webbing,Umum 1,4500000,5806,N,5000,auto,Tape woven,Standard,Standard,Standard
+Kawat bulu (DIY craft),Umum 1,4500000,Various,N,5000,auto,DIY craft material,Standard,Standard,Standard
+Casing HP,Umum 1,4500000,3926,Y,5000,auto,Phone case,Standard,Standard,Standard
+Akrilik,Umum 1,4500000,3920,N,5000,auto,Acrylic sheet,Standard,Standard,Standard
+Silicon,Umum 1,4500000,Various,N,5000,auto,Silicone material,Standard,Standard,Standard
+Plastic hook accessory,Umum 1,4500000,3926.90.99,N,5000,auto,Mixed material - if 15% metal still 3926 by 70/30 rule,Standard,Standard,Standard
+Raket,Umum 1,4500000,9506.59,N,5000,auto,Sports racket,Standard,Standard,Standard
+Pasir kucing,Umum 2,5500000,2508/2519,N,5000,auto,Litter sand,Standard,Standard,Standard
+Set sikat gigi,Umum 2,5500000,9603.21,N,5000,auto,Hygiene set,Standard,Standard,Standard
+Balon lateks,Umum 2,5500000,9505,N,5000,auto,Latex balloon,Standard,Standard,Standard
+Bando,Umum 2,5500000,6117/9615,N,5000,auto,Hair accessory,Standard,Standard,Standard
+Tanaman palsu,Umum 2,5500000,6702,N,5000,auto,Artificial plant,Standard,Standard,Standard
+Beads kelang kalung,Umum 2,5500000,7117,N,5000,auto,Necklace beads,Standard,Standard,Standard
+Keramik mangkok piring,Umum 2,5500000,6911,N,5000,auto,Volume > 5 CBM negotiable,Standard,Permendag 22/2025 keramik,April 2026 lose VAT rebate
+Perintilan computer (keyboard mouse kabel),Umum 2,5500000,8471/8544,Y,5000,auto,Branded > Brand surcharge,Standard,Permendag 21/2025,Standard
+Korek api kosong (no gas no liquid),Umum 2,5500000,9613,N,5000,auto,Different from electric or filled lighter,Standard,Standard,Standard
+Ornamen rotan kayu,Umum 2,5500000,4420/9603,N,5000,auto,DI Kehutanan declaration needed,Standard,SVLK declaration,Standard
+Lampu,Umum 2,5500000,9405,Y,5000,auto,If branded apply surcharge,Standard,Permendag 21/2025 if elektronik,Standard
+Saklar,Umum 2,5500000,8536,Y,5000,auto,Branded > Brand surcharge,Standard,Permendag 21/2025 if elektronik,Standard
+Tas/koper,Umum 2,5500000,4202,Y,5000,auto,If branded > Brand surcharge,Standard,Permendag 23/2025,Standard
+Alas kaki karet,Umum 2,5500000,6402,N,5000,auto,Rubber footwear,Standard,Permendag 23/2025 alas kaki,Standard
+Aksesoris fashion,Umum 2,5500000,Various,Y,5000,auto,Branded > Brand surcharge,Standard,Permendag 23/2025,Standard
+Furniture sofa,Umum 2,5500000,9401,N,5000,auto,Strategic acquisition - volume gede,Standard,Standard,Standard
+Furniture meja,Umum 2,5500000,9403,N,5000,auto,Strategic acquisition,Standard,Standard,Standard
+Furniture lemari,Umum 2,5500000,9403,N,5000,auto,Strategic acquisition,Standard,Standard,Standard
+Mainan SNI,Lartas 1,5500000,9503/9504,Y,5000,auto,SNI Mainan mandatory - Permenperin 24/2013 jo 29/2018,Standard,SNI Mainan + Permendag 23/2025,Standard
+Sepeda,Lartas 1,5500000,8712,Y,5000,auto,Permendag 23/2025,Standard,Permendag 23/2025 sepeda,Standard
+Kayu/bambu,Lartas 1,5500000,4401-4421,N,5000,auto,DI Kehutanan / SVLK required,Pallet + plastik hitam if needed,SVLK declaration,Standard
+Tissue/tissue basah,Lartas 1,5500000,4818,N,5000,auto,Tissue items,Standard,Standard,Standard
+Kabel,Lartas 1,5500000,8544,Y,5000,auto,Branded > Brand surcharge,Standard,Permendag 21/2025 if elektronik,Standard
+Kitchenware stainless/besi consumer,Lartas 1,5500000,7323,N,5000,auto,PI Besi semakin ketat - watch packaging,Standard,Permendag 22/2025 monitor,Jan 2026 export license for raw metal
+Wig,Lartas 1,5500000,6704,N,5000,auto,Hair product,Standard,Standard,Standard
+Lukisan,Lartas 1,5500000,9701,N,5000,auto,Painting/artwork,Standard,Standard,Standard
+Sepatu/Sendal,Lartas 1,5500000,6403/6404,Y,5000,auto,Permendag 23/2025 alas kaki,Standard,Permendag 23/2025,Standard
+Mesin ringan kettle,Lartas 1,5500000,8516,Y,5000,auto,Light appliance,Standard,Permendag 21/2025,Standard
+Hair dryer,Lartas 1,5500000,8516.31,Y,5000,auto,Light appliance,Standard,Permendag 21/2025,Standard
+Smart board,Lartas 1,5500000,8471/8528,Y,5000,auto,Branded device,Standard,Permendag 21/2025,Standard
+Modem,Lartas 1,5500000,8517,Y,5000,auto,SDPPI cert if wireless,Standard,Permendag 21/2025 + SDPPI,Standard
+AC Central,Lartas 1,5500000,8415,Y,5000,auto,Central air conditioner,Standard,Permendag 21/2025,Standard
+Copper net/filter net/jaring nyamuk,Lartas 1,5500000,7314/5608,N,5000,auto,Metal mesh,Standard,Standard,Jan 2026 if copper raw metal license
+Mainan boneka,Lartas 1,5500000,9503,N,5000,auto,SNI Mainan if applicable,Standard,SNI Mainan,Standard
+Home lift,Lartas 1,5500000,8428,N,5000,auto,Home elevator,Standard,Standard,Standard
+Iron rack,Lartas 1,5500000,7308/7326,N,5000,auto,Iron storage rack - finished consumer good,Standard,Permendag 22/2025 monitor,Jan 2026 export license
+Meja billiard,Lartas 1,5500000,9504.20,N,5000,auto,Billiard table,Standard,Standard,Standard
+Alat DJ,Lartas 1,5500000,8519/8543,Y,5000,auto,DJ equipment - branded > surcharge,Standard,Permendag 21/2025,Standard
+Automatic pet feeder,Lartas 1,5500000,8438/8479,Y,5000,auto,Pet equipment,Standard,Standard,Standard
+Masker,Lartas 1,5500000,6307.90/3926,N,5000,auto,Masks,Standard,Standard,Standard
+Bulu bebek,Lartas 1,5500000,0505,N,5000,auto,Down feather,Standard,Standard,Standard
+Dupa,Lartas 1,5500000,3307.41,N,5000,auto,Incense,Standard,Standard,Standard
+Scooter terpasang baterai,Lartas 1,5500000,8711.60/8712,N,5000,auto,Battery integrated - SEPARATE from baterai pricing if removable,Standard,Standard,Standard
+Solar panel + bracket,Lartas 1,5500000,8541.40,N,5000,auto,Baterai-nya = Hot Items terpisah,Standard,Standard,April 2026 lose VAT rebate
+Kawat tembaga,Lartas 1,5500000,7408,N,5000,auto,OVW likely - dense,Standard,Standard,Dec 2024 lose VAT rebate copper / Jan 2026 export license
+Preserved flower,Lartas 1,5500000,0603,N,5000,auto,Bunga asli dibekukan,Standard,Standard,Standard
+Mesin cuci industrial,Lartas 1,5500000,8450.20,N,5000,auto,Industrial size,Standard,Permendag 21/2025,Standard
+Kandang besi,Lartas 1,5500000,7308/7314,N,5000,auto,Default Lartas Berat but with pallet+plastik hitam packing can be Lartas 1,Pallet + plastik hitam,Permendag 22/2025 monitor,Jan 2026 export license
+Submersible pump,Lartas 1,5500000,8413,N,5000,auto,Operational upgrade from Umum - barang mahal,Standard,Standard,Standard
+Potato peeling machine,Lartas 1,5500000,8438,N,5000,auto,Operational upgrade - mahal + handling kompleks,Standard,Standard,Standard
+Asbestos roll,Lartas 1,5500000,2524/6811,N,5000,auto,Operational upgrade - mahal + sensitif + proyek,Standard,B3 monitor,Standard
+Gasoline generator,Lartas 1,5500000,8502,N,5000,auto,Operational upgrade - mahal + berat,Standard,Standard,Standard
+Sparepart light,Lartas 1,5500000,Various,N,5000,auto,Operational upgrade - mahal + sensitif,Standard,Standard,Standard
+Speedometer Mio (sparepart motor),Lartas 1,5500000,9028.10,N,5000,auto,Operational upgrade,Standard,Standard,Standard
+Motor CKD,Lartas Berat,6500000,8714,Y,5000,auto,Branded > Brand surcharge,Standard,Standard,Standard
+ATV,Lartas Berat,6500000,8703,N,5000,auto,Standard,Standard,Standard,Standard
+Golf car,Lartas Berat,6500000,8703.10,N,5000,auto,Standard,Standard,Standard,Standard
+Mini excavator,Lartas Berat,6500000,8429.51,N,5000,auto,Heavy machinery,Standard,Standard,Standard
+GPS,Lartas Berat,6500000,8526.91,Y,5000,auto,Branded > Brand surcharge,Standard,Permendag 21/2025 + SDPPI,Standard
+Walkie talkie,Lartas Berat,6500000,8517.61,Y,5000,auto,Izin telekomunikasi SDPPI,Standard,SDPPI cert mandatory,Standard
+HT (Handy Talkie),Lartas Berat,6500000,8517.61,Y,5000,auto,Same as walkie talkie,Standard,SDPPI cert mandatory,Standard
+Pampers,Lartas Berat,6500000,9619,N,5000,auto,Adult/baby diapers,Standard,Standard,Standard
+Menstrual cup,Lartas Berat,6500000,9018.39,N,5000,auto,Alkes route,Standard,Kemenkes (Alkes),Standard
+Alkes tempat tidur pasien,Lartas Berat,6500000,9402.90,N,5000,auto,Medical hospital bed,Standard,Kemenkes (Alkes),Standard
+Sex toys,Lartas Berat,6500000,Various,N,5000,auto,Sensitive lifestyle,Standard,Standard,Standard
+Pewangi ruangan,Lartas Berat,6500000,3307.49,N,5000,auto,Room fragrance,Standard,BPOM,Standard
+Lem bulu mata,Lartas Berat,6500000,3506.91,N,5000,auto,Eyelash glue,Standard,BPOM kosmetik,Standard
+Komputer Lenovo,Lartas Berat,6500000,8471,Y,5000,auto,Brand surcharge applies (备案 Lenovo registered),Standard,Permendag 21/2025,Standard
+Oli,Lartas Berat,6500000,2710/3403,N,5000,auto,Packaging harus aman,Leak-proof container,Permendag 20/2025 if B3 / pelumas,Standard
+Grease,Lartas Berat,6500000,2710/3403,N,5000,auto,OVW likely,Leak-proof,Permendag 20/2025 pelumas,Standard
+Engsel,Lartas Berat,6500000,8302.10,N,5000,auto,Metal hardware,Standard,Permendag 22/2025 monitor,Jan 2026 export license if raw metal
+Baut,Lartas Berat,6500000,7318,N,5000,auto,Confirm atasan for per kg vs per CBM,Standard,Permendag 22/2025 perkakas,Jan 2026 export license
+Pipa baja,Lartas Berat,6500000,7304-7306,N,5000,auto,STRICT - no flexibility,Standard,Permendag 22/2025 + PI Besi,Jan 2026 export license MANDATORY
+Powerbank,Lartas Berat,6500000,8507.60,Y,5000,auto,Consumer portable charger - different from baterai general,Battery DG packaging,Permendag 21/2025,Standard
+Laptop,Lartas Berat,6500000,8471.30,Y,5000,auto,+ Rp 250000 per piece ATENSI ITEM,Standard,Permendag 21/2025,Standard
+Metal raw (iron/steel/copper/aluminum sheets pipes wires),Lartas Berat,6500000,Chapter 72-76,N,5000,auto,+ Rp 10jt flat per shipment (China export license),Standard,Permendag 22/2025 + PI Besi,Jan 2026 MOFCOM license MANDATORY
+Aluminum-plastic foil,Lartas Berat,6500000,7607.20,N,5000,auto,Exception - no China export license,Standard,Standard,Standard - exception
+Handuk,Semi Garment,7500000,5802/6302,N,5000,auto,Towel,Carton + karung,Permendag 17/2025 tekstil,Standard
+Kaos kaki,Semi Garment,7500000,6115,N,5000,auto,Socks,Carton + karung,Permendag 17/2025 tekstil,Standard
+Keset,Semi Garment,7500000,5703,N,5000,auto,Floor mat,Carton + karung,Permendag 17/2025 tekstil,Standard
+Underwear,Semi Garment,7500000,6107-6109,N,5000,auto,Inner garment,Carton + karung,Permendag 17/2025 tekstil,Standard
+Korset,Semi Garment,7500000,6212,N,5000,auto,Corset,Carton + karung,Permendag 17/2025 tekstil,Standard
+Mousepad kain,Semi Garment,7500000,5603/3926,N,5000,auto,Fabric mousepad - vs rubber Umum 1,Carton + karung,Standard,Standard
+Bantal,Semi Garment,7500000,9404.90,N,5000,auto,Pillow,Carton + karung,Standard,Standard
+Sarung bantal,Semi Garment,7500000,6304.91,N,5000,auto,Pillow case,Carton + karung,Permendag 17/2025 tekstil,Standard
+Tali,Semi Garment,7500000,5607,N,5000,auto,Rope/cord,Carton + karung,Standard,Standard
+Yoga mat kain,Semi Garment,7500000,5703,N,5000,auto,Fabric yoga mat - vs karet Umum 1,Carton + karung,Standard,Standard
+Tenda,Semi Garment,7500000,6306.22/6306.29,N,5000,auto,Tent,Carton + karung,Standard,Standard
+Jaring tanaman,Semi Garment,7500000,5608,N,5000,auto,Plant netting,Carton + karung,Standard,Standard
+Sarung tangan kain,Semi Garment,7500000,6116,N,5000,auto,Cloth gloves,Carton + karung,Permendag 17/2025 tekstil,Standard
+Pita kain,Semi Garment,7500000,5807,N,5000,auto,Fabric ribbon,Carton + karung,Standard,Standard
+Hair care,Kosmetik Makanan,8000000,3305,Y,5000,auto,Shampoo conditioner etc,Standard,BPOM kosmetik + halal Oct 2026,Standard
+Skincare/cream,Kosmetik Makanan,8000000,3304,Y,5000,auto,Beauty cream,Standard,BPOM kosmetik + halal Oct 2026,Standard
+Kosmetik,Kosmetik Makanan,8000000,3303-3307,Y,5000,auto,Cosmetics general,Standard,BPOM kosmetik + halal Oct 2026,Standard
+Alkes kacamata prescription,Kosmetik Makanan,8000000,9004.90.10,N,5000,auto,Alkes route (vs fashion 9004.9090),Standard,Kemenkes Alkes,Standard
+Lens blocking pad,Kosmetik Makanan,8000000,3926/9001,N,5000,auto,Alkes accessory,Standard,Kemenkes Alkes,Standard
+Obat,Kosmetik Makanan,8000000,3003-3004,Y,5000,auto,Drug/medicine,Standard,BPOM obat,Standard
+Supplement bubuk,Kosmetik Makanan,8000000,2106.90.99,Y,5000,auto,Supplement powder,Standard,BPOM supplement,Standard
+Vitamin gummy,Kosmetik Makanan,8000000,2106.90.99,Y,5000,auto,Gummy vitamin,Standard,BPOM supplement,Standard
+Makanan,Kosmetik Makanan,8000000,16-22,Y,5000,auto,Susah masuk - operational reality,Standard,BPOM ML + halal Oct 2026,Standard
+Minuman,Kosmetik Makanan,8000000,22,Y,5000,auto,Packing kuat & aman,Leak-proof + secondary packaging,BPOM ML + halal Oct 2026,Standard
+Dextrose/pemanis buatan,Kosmetik Makanan,8000000,1702/2106,Y,5000,auto,Sweetener,Standard,BPOM ML,Standard
+Bumbu BBQ,Kosmetik Makanan,8000000,2103,Y,5000,auto,Seasoning,Standard,BPOM ML + halal Oct 2026,Standard
+Baju,Garment,10000000,6101-6114/6201-6212,N,5000,auto,Wajib baru,Carton + karung (no balpress no single karung),Permendag 17/2025 tekstil + 23/2025,Standard
+Celana,Garment,10000000,6103-6204,N,5000,auto,Wajib baru,Carton + karung,Permendag 17/2025 tekstil,Standard
+Jaket,Garment,10000000,6101-6202,N,5000,auto,Wajib baru,Carton + karung,Permendag 17/2025 tekstil,Standard
+Aki,Hot Items,10000000,8507.10/8507.20,N,5000,auto,Susah keluar di China - rentan periksa - max 500 kg/CBM,Battery DG packaging,Permendag 21/2025,Class 8/9 DG
+Baterai (general),Hot Items,10000000,8506/8507,N,5000,auto,Lithium = Class 9 DG UN3480/3481 - UN38.3 test required,Battery DG packaging,Permendag 21/2025,April 2026 rebate cut 9% to 6%
+Baterai rokok elektrik,Hot Items,10000000,8507.60,N,5000,auto,Removable battery,Battery DG packaging,Permendag 21/2025 + BPOM (vape),Standard
+Koper dengan baterai,Hot Items,10000000,4202+8507,N,5000,auto,Lifestyle integration with battery,Battery DG packaging,Permendag 21/2025,Standard
+Oli (Hot category),Hot Items,10000000,2710/3403,N,5000,auto,If volume/type qualifies for hazmat,Leak-proof,Permendag 20/2025,Standard
+Lem,Hot Items,10000000,3506,N,5000,auto,Adhesive,Standard,Permendag 20/2025 if B3,Standard
+Pelumas,Hot Items,10000000,3403,N,5000,auto,Lubricant,Leak-proof,Permendag 20/2025,Standard
+Cairan urea,Hot Items,10000000,3102.10,N,5000,auto,Urea liquid,Leak-proof,Permendag 20/2025,Standard
+Cairan cat,Hot Items,10000000,3208/3209,N,5000,auto,Liquid paint,Leak-proof,Permendag 20/2025 if B3,Standard
+Preserved moss,Hot Items,10000000,0604,N,5000,auto,Biological item,Standard,Standard,Standard
+Bawang fermentasi (<10 CBM),Hot Items,10000000,2005/2008,N,5000,auto,<10 CBM Hot - >10 CBM Lartas Berat (volume shift),Carton + karung HIJAU,Standard,Spoilage = customer risk
+Water gel bullet,Hot Items,10000000,9304/9306,N,5000,auto,Toy ammunition - different from gel blaster gun (Lartas 1),Standard,Standard,Standard
+Peluru airsoft,Hot Items,10000000,9306,N,5000,auto,Airsoft ammunition,Standard,Standard,Standard
+Freon,Hot Items,10000000,2903.71-79,N,5000,auto,Refrigerant - Permendag 20/2025 HFC/BPO,Standard,Permendag 20/2025 HFC,Standard
+DEG (Diethylene Glycol),Hot Items,10000000,2909.41,N,5000,auto,LCL 2-3 CBM per shipment,Packing kuat international,Permendag 20/2025 if B3,Standard
+Obat racun tikus,Hot Items,10000000,3808,N,5000,auto,Pesticide,Standard,B3 if applicable,Standard
+Obat racun semut,Hot Items,10000000,3808,N,5000,auto,Pesticide,Standard,B3 if applicable,Standard
+Pestisida,Hot Items,10000000,3808,N,5000,auto,Pesticide,Standard,B3 + Kemenkes,Standard
+Obat kecoak,Hot Items,10000000,3808,N,5000,auto,Cockroach poison,Standard,B3,Standard
+Kain roll,Tekstil,12500000,5208-5212,N,5000,auto,Raw fabric roll,Carton possible,Permendag 17/2025 tekstil,Standard
+Gordyn roll,Tekstil,12500000,6303,N,5000,auto,Curtain roll,Carton possible,Permendag 17/2025 tekstil,Standard
+Sajadah roll,Tekstil,12500000,5701-5705,N,5000,auto,Prayer mat roll,Carton possible,Permendag 17/2025 tekstil,Standard
+Drone,Super Sensitive,Special-drone,8525.30/8526,Y,5000,conditional,0-1 CBM: 3jt flat + 10jt/CBM | 1-3 CBM: 6jt flat + 10jt/CBM,Standard,SDPPI cert + DGCA (PM 37/2020),China export control Sept 2024
+Binocular/Teropong,Super Sensitive,Special-drone,9005.10,N,5000,conditional,Same as drone pricing structure,Standard,Standard,China export control if advanced spec
+Teropong senapan/Riflescope,Super Sensitive,Special-drone,9005.10/9013.10,N,5000,conditional,Same as drone - weapon-adjacent,Standard,Kemenhan Polri if applicable,China export control
+Chain Lube,Super Sensitive,20000000,3403.19,N,5000,conditional,Aerosol pressurized - MSDS required,Specialized DG packaging,Permendag 20/2025,LCL only ~4 China forwarders licensed
+Silicone spray,Super Sensitive,20000000,3403.99,N,5000,conditional,Aerosol pressurized - MSDS required,Specialized DG packaging,Permendag 20/2025,LCL only ~4 China forwarders
+Chemical aerosol,Super Sensitive,20000000,Various,N,5000,conditional,MSDS mandatory,Specialized DG packaging,Permendag 20/2025,LCL limited capability
+Tabung gas HCl,Super Sensitive,20000000,2806.10,N,5000,conditional,Compressed corrosive,Specialized DG packaging,Permendag 20/2025 + B3,LCL limited capability
+Bubuk kimia,Super Sensitive,20000000,Various Ch28-38,N,5000,conditional,MSDS mandatory,Specialized DG packaging,Permendag 20/2025,Standard
+Formic acid (asam formiat),Super Sensitive,20000000,2915.11,N,5000,conditional,Class 8 corrosive,Specialized DG packaging,Permendag 20/2025 + B3,Standard
+Asam (HCl/sulfuric/etc),Super Sensitive,20000000,2806/2807,N,5000,conditional,Class 8 corrosive,Specialized DG packaging,Permendag 20/2025 + B3,Standard
+PBS chemical (HS 3824999999),Super Sensitive,20000000,3824.99.99,N,5000,conditional,Min 1 CBM charge for small volume,Standard,Permendag 20/2025 if BKT,Standard
+TBS chemical (HS 3824999999),Super Sensitive,20000000,3824.99.99,N,5000,conditional,Min 1 CBM charge for small volume,Standard,Permendag 20/2025 if BKT,Standard
+Korek api electric (baterai kecil),Super Sensitive,20000000,9613.80+8506,N,5000,conditional,Fire risk + battery,Specialized DG packaging,Standard,Standard
+Cairan vape,Super Sensitive,20000000,3824.99.99/8543.90.90,N,5000,conditional,20jt/CBM - min 0.5 CBM - MAX 1 CBM/container,Specialized DG packaging,BPOM + cukai 57% + NPPBKC,Standard
+Arak (minuman beralkohol),Super Sensitive,20000000,2203-2208,N,5000,conditional,20jt/CBM - min 0.5 CBM - jalur availability uncertain,Standard,Permendag 22/2025 (bahan baku) + NPPBKC + cukai,Standard
+Rokok,Rokok,30000000,2402,N,5000,conditional,Per slop Rp 100000 OR 30jt/CBM - min 0.5 CBM per pengiriman,Standard,NPPBKC + cukai + BPOM (zat adiktif),Standard
+Mobil listrik,REJECT,0,8703.80,N,N/A,reject,Auto-reject - regulated,N/A,Various permits required,N/A
+Solar mini car,REJECT,0,8703,N,N/A,reject,Auto-reject,N/A,N/A,N/A
+Barang bekas,REJECT,0,N/A,N,N/A,reject,Permendag 24/2025 - blanket reject,N/A,Permendag 24/2025,N/A
+Replika senjata identifiable,REJECT,0,9303-9304,N,N/A,reject,Auto-reject - safety + regulatory,N/A,Kemenhan Polri,Standard
