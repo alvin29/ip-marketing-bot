@@ -49,42 +49,42 @@ Aksesoris fashion,Umum 2,5500000,Various,Y,5000,auto,Branded > Brand surcharge,S
 Furniture sofa,Umum 2,5500000,9401,N,5000,auto,Strategic acquisition - volume gede,Standard,Standard,Standard
 Furniture meja,Umum 2,5500000,9403,N,5000,auto,Strategic acquisition,Standard,Standard,Standard
 Furniture lemari,Umum 2,5500000,9403,N,5000,auto,Strategic acquisition,Standard,Standard,Standard
-Mainan SNI,Lartas 1,5500000,9503/9504,Y,5000,auto,SNI Mainan mandatory - Permenperin 24/2013 jo 29/2018,Standard,SNI Mainan + Permendag 23/2025,Standard
-Sepeda,Lartas 1,5500000,8712,Y,5000,auto,Permendag 23/2025,Standard,Permendag 23/2025 sepeda,Standard
-Kayu/bambu,Lartas 1,5500000,4401-4421,N,5000,auto,DI Kehutanan / SVLK required,Pallet + plastik hitam if needed,SVLK declaration,Standard
-Tissue/tissue basah,Lartas 1,5500000,4818,N,5000,auto,Tissue items,Standard,Standard,Standard
-Kabel,Lartas 1,5500000,8544,Y,5000,auto,Branded > Brand surcharge,Standard,Permendag 21/2025 if elektronik,Standard
-Kitchenware stainless/besi consumer,Lartas 1,5500000,7323,N,5000,auto,PI Besi semakin ketat - watch packaging,Standard,Permendag 22/2025 monitor,Jan 2026 export license for raw metal
-Wig,Lartas 1,5500000,6704,N,5000,auto,Hair product,Standard,Standard,Standard
-Lukisan,Lartas 1,5500000,9701,N,5000,auto,Painting/artwork,Standard,Standard,Standard
-Sepatu/Sendal,Lartas 1,5500000,6403/6404,Y,5000,auto,Permendag 23/2025 alas kaki,Standard,Permendag 23/2025,Standard
-Mesin ringan kettle,Lartas 1,5500000,8516,Y,5000,auto,Light appliance,Standard,Permendag 21/2025,Standard
-Hair dryer,Lartas 1,5500000,8516.31,Y,5000,auto,Light appliance,Standard,Permendag 21/2025,Standard
-Smart board,Lartas 1,5500000,8471/8528,Y,5000,auto,Branded device,Standard,Permendag 21/2025,Standard
-Modem,Lartas 1,5500000,8517,Y,5000,auto,SDPPI cert if wireless,Standard,Permendag 21/2025 + SDPPI,Standard
-AC Central,Lartas 1,5500000,8415,Y,5000,auto,Central air conditioner,Standard,Permendag 21/2025,Standard
-Copper net/filter net/jaring nyamuk,Lartas 1,5500000,7314/5608,N,5000,auto,Metal mesh,Standard,Standard,Jan 2026 if copper raw metal license
-Mainan boneka,Lartas 1,5500000,9503,N,5000,auto,SNI Mainan if applicable,Standard,SNI Mainan,Standard
-Home lift,Lartas 1,5500000,8428,N,5000,auto,Home elevator,Standard,Standard,Standard
-Iron rack,Lartas 1,5500000,7308/7326,N,5000,auto,Iron storage rack - finished consumer good,Standard,Permendag 22/2025 monitor,Jan 2026 export license
-Meja billiard,Lartas 1,5500000,9504.20,N,5000,auto,Billiard table,Standard,Standard,Standard
-Alat DJ,Lartas 1,5500000,8519/8543,Y,5000,auto,DJ equipment - branded > surcharge,Standard,Permendag 21/2025,Standard
-Automatic pet feeder,Lartas 1,5500000,8438/8479,Y,5000,auto,Pet equipment,Standard,Standard,Standard
-Masker,Lartas 1,5500000,6307.90/3926,N,5000,auto,Masks,Standard,Standard,Standard
-Bulu bebek,Lartas 1,5500000,0505,N,5000,auto,Down feather,Standard,Standard,Standard
-Dupa,Lartas 1,5500000,3307.41,N,5000,auto,Incense,Standard,Standard,Standard
-Scooter terpasang baterai,Lartas 1,5500000,8711.60/8712,N,5000,auto,Battery integrated - SEPARATE from baterai pricing if removable,Standard,Standard,Standard
-Solar panel + bracket,Lartas 1,5500000,8541.40,N,5000,auto,Baterai-nya = Hot Items terpisah,Standard,Standard,April 2026 lose VAT rebate
-Kawat tembaga,Lartas 1,5500000,7408,N,5000,auto,OVW likely - dense,Standard,Standard,Dec 2024 lose VAT rebate copper / Jan 2026 export license
-Preserved flower,Lartas 1,5500000,0603,N,5000,auto,Bunga asli dibekukan,Standard,Standard,Standard
-Mesin cuci industrial,Lartas 1,5500000,8450.20,N,5000,auto,Industrial size,Standard,Permendag 21/2025,Standard
-Kandang besi,Lartas 1,5500000,7308/7314,N,5000,auto,Default Lartas Berat but with pallet+plastik hitam packing can be Lartas 1,Pallet + plastik hitam,Permendag 22/2025 monitor,Jan 2026 export license
-Submersible pump,Lartas 1,5500000,8413,N,5000,auto,Operational upgrade from Umum - barang mahal,Standard,Standard,Standard
-Potato peeling machine,Lartas 1,5500000,8438,N,5000,auto,Operational upgrade - mahal + handling kompleks,Standard,Standard,Standard
-Asbestos roll,Lartas 1,5500000,2524/6811,N,5000,auto,Operational upgrade - mahal + sensitif + proyek,Standard,B3 monitor,Standard
-Gasoline generator,Lartas 1,5500000,8502,N,5000,auto,Operational upgrade - mahal + berat,Standard,Standard,Standard
-Sparepart light,Lartas 1,5500000,Various,N,5000,auto,Operational upgrade - mahal + sensitif,Standard,Standard,Standard
-Speedometer Mio (sparepart motor),Lartas 1,5500000,9028.10,N,5000,auto,Operational upgrade,Standard,Standard,Standard
+Mainan SNI,Lartas Ringan,6000000,9503/9504,Y,5000,auto,SNI Mainan mandatory - Permenperin 24/2013 jo 29/2018,Standard,SNI Mainan + Permendag 23/2025,Standard
+Sepeda,Lartas Ringan,6000000,8712,Y,5000,auto,Permendag 23/2025,Standard,Permendag 23/2025 sepeda,Standard
+Kayu/bambu,Lartas Ringan,6000000,4401-4421,N,5000,auto,DI Kehutanan / SVLK required,Pallet + plastik hitam if needed,SVLK declaration,Standard
+Tissue/tissue basah,Lartas Ringan,6000000,4818,N,5000,auto,Tissue items,Standard,Standard,Standard
+Kabel,Lartas Ringan,6000000,8544,Y,5000,auto,Branded > Brand surcharge,Standard,Permendag 21/2025 if elektronik,Standard
+Kitchenware stainless/besi consumer,Lartas Ringan,6000000,7323,N,5000,auto,PI Besi semakin ketat - watch packaging,Standard,Permendag 22/2025 monitor,Jan 2026 export license for raw metal
+Wig,Lartas Ringan,6000000,6704,N,5000,auto,Hair product,Standard,Standard,Standard
+Lukisan,Lartas Ringan,6000000,9701,N,5000,auto,Painting/artwork,Standard,Standard,Standard
+Sepatu/Sendal,Lartas Ringan,6000000,6403/6404,Y,5000,auto,Permendag 23/2025 alas kaki,Standard,Permendag 23/2025,Standard
+Mesin ringan kettle,Lartas Ringan,6000000,8516,Y,5000,auto,Light appliance,Standard,Permendag 21/2025,Standard
+Hair dryer,Lartas Ringan,6000000,8516.31,Y,5000,auto,Light appliance,Standard,Permendag 21/2025,Standard
+Smart board,Lartas Ringan,6000000,8471/8528,Y,5000,auto,Branded device,Standard,Permendag 21/2025,Standard
+Modem,Lartas Ringan,6000000,8517,Y,5000,auto,SDPPI cert if wireless,Standard,Permendag 21/2025 + SDPPI,Standard
+AC Central,Lartas Ringan,6000000,8415,Y,5000,auto,Central air conditioner,Standard,Permendag 21/2025,Standard
+Copper net/filter net/jaring nyamuk,Lartas Ringan,6000000,7314/5608,N,5000,auto,Metal mesh,Standard,Standard,Jan 2026 if copper raw metal license
+Mainan boneka,Lartas Ringan,6000000,9503,N,5000,auto,SNI Mainan if applicable,Standard,SNI Mainan,Standard
+Home lift,Lartas Ringan,6000000,8428,N,5000,auto,Home elevator,Standard,Standard,Standard
+Iron rack,Lartas Ringan,6000000,7308/7326,N,5000,auto,Iron storage rack - finished consumer good,Standard,Permendag 22/2025 monitor,Jan 2026 export license
+Meja billiard,Lartas Ringan,6000000,9504.20,N,5000,auto,Billiard table,Standard,Standard,Standard
+Alat DJ,Lartas Ringan,6000000,8519/8543,Y,5000,auto,DJ equipment - branded > surcharge,Standard,Permendag 21/2025,Standard
+Automatic pet feeder,Lartas Ringan,6000000,8438/8479,Y,5000,auto,Pet equipment,Standard,Standard,Standard
+Masker,Lartas Ringan,6000000,6307.90/3926,N,5000,auto,Masks,Standard,Standard,Standard
+Bulu bebek,Lartas Ringan,6000000,0505,N,5000,auto,Down feather,Standard,Standard,Standard
+Dupa,Lartas Ringan,6000000,3307.41,N,5000,auto,Incense,Standard,Standard,Standard
+Scooter terpasang baterai,Lartas Ringan,6000000,8711.60/8712,N,5000,auto,Battery integrated - SEPARATE from baterai pricing if removable,Standard,Standard,Standard
+Solar panel + bracket,Lartas Ringan,6000000,8541.40,N,5000,auto,Baterai-nya = Hot Items terpisah,Standard,Standard,April 2026 lose VAT rebate
+Kawat tembaga,Lartas Ringan,6000000,7408,N,5000,auto,OVW likely - dense,Standard,Standard,Dec 2024 lose VAT rebate copper / Jan 2026 export license
+Preserved flower,Lartas Ringan,6000000,0603,N,5000,auto,Bunga asli dibekukan,Standard,Standard,Standard
+Mesin cuci industrial,Lartas Ringan,6000000,8450.20,N,5000,auto,Industrial size,Standard,Permendag 21/2025,Standard
+Kandang besi,Lartas Ringan,6000000,7308/7314,N,5000,auto,Default Lartas Berat but with pallet+plastik hitam packing can be Lartas 1,Pallet + plastik hitam,Permendag 22/2025 monitor,Jan 2026 export license
+Submersible pump,Lartas Ringan,6000000,8413,N,5000,auto,Operational upgrade from Umum - barang mahal,Standard,Standard,Standard
+Potato peeling machine,Lartas Ringan,6000000,8438,N,5000,auto,Operational upgrade - mahal + handling kompleks,Standard,Standard,Standard
+Asbestos roll,Lartas Ringan,6000000,2524/6811,N,5000,auto,Operational upgrade - mahal + sensitif + proyek,Standard,B3 monitor,Standard
+Gasoline generator,Lartas Ringan,6000000,8502,N,5000,auto,Operational upgrade - mahal + berat,Standard,Standard,Standard
+Sparepart light,Lartas Ringan,6000000,Various,N,5000,auto,Operational upgrade - mahal + sensitif,Standard,Standard,Standard
+Speedometer Mio (sparepart motor),Lartas Ringan,6000000,9028.10,N,5000,auto,Operational upgrade,Standard,Standard,Standard
 Motor CKD,Lartas Berat,6500000,8714,Y,5000,auto,Branded > Brand surcharge,Standard,Standard,Standard
 ATV,Lartas Berat,6500000,8703,N,5000,auto,Standard,Standard,Standard,Standard
 Golf car,Lartas Berat,6500000,8703.10,N,5000,auto,Standard,Standard,Standard,Standard
@@ -134,9 +134,9 @@ Makanan,Kosmetik Makanan,8000000,16-22,Y,5000,auto,Susah masuk - operational rea
 Minuman,Kosmetik Makanan,8000000,22,Y,5000,auto,Packing kuat & aman,Leak-proof + secondary packaging,BPOM ML + halal Oct 2026,Standard
 Dextrose/pemanis buatan,Kosmetik Makanan,8000000,1702/2106,Y,5000,auto,Sweetener,Standard,BPOM ML,Standard
 Bumbu BBQ,Kosmetik Makanan,8000000,2103,Y,5000,auto,Seasoning,Standard,BPOM ML + halal Oct 2026,Standard
-Baju,Garment,10000000,6101-6114/6201-6212,N,5000,auto,Wajib baru,Carton + karung (no balpress no single karung),Permendag 17/2025 tekstil + 23/2025,Standard
-Celana,Garment,10000000,6103-6204,N,5000,auto,Wajib baru,Carton + karung,Permendag 17/2025 tekstil,Standard
-Jaket,Garment,10000000,6101-6202,N,5000,auto,Wajib baru,Carton + karung,Permendag 17/2025 tekstil,Standard
+Baju,Garment,9000000,6101-6114/6201-6212,N,5000,auto,Wajib baru. <5 CBM: 9jt | >5 CBM: 8.8jt | >10 CBM: 8.5jt. ALAMAT KHUSUS + transit 7-8 minggu,Carton + karung (no balpress no single karung),Permendag 17/2025 tekstil + 23/2025,Standard
+Celana,Garment,9000000,6103-6204,N,5000,auto,Wajib baru. <5 CBM: 9jt | >5 CBM: 8.8jt | >10 CBM: 8.5jt. ALAMAT KHUSUS + transit 7-8 minggu,Carton + karung,Permendag 17/2025 tekstil,Standard
+Jaket,Garment,9000000,6101-6202,N,5000,auto,Wajib baru. <5 CBM: 9jt | >5 CBM: 8.8jt | >10 CBM: 8.5jt. ALAMAT KHUSUS + transit 7-8 minggu,Carton + karung,Permendag 17/2025 tekstil,Standard
 Aki,Hot Items,10000000,8507.10/8507.20,N,5000,auto,Susah keluar di China - rentan periksa - max 500 kg/CBM,Battery DG packaging,Permendag 21/2025,Class 8/9 DG
 Baterai (general),Hot Items,10000000,8506/8507,N,5000,auto,Lithium = Class 9 DG UN3480/3481 - UN38.3 test required,Battery DG packaging,Permendag 21/2025,April 2026 rebate cut 9% to 6%
 Baterai rokok elektrik,Hot Items,10000000,8507.60,N,5000,auto,Removable battery,Battery DG packaging,Permendag 21/2025 + BPOM (vape),Standard
@@ -174,7 +174,7 @@ TBS chemical (HS 3824999999),Super Sensitive,20000000,3824.99.99,N,5000,conditio
 Korek api electric (baterai kecil),Super Sensitive,20000000,9613.80+8506,N,5000,conditional,Fire risk + battery,Specialized DG packaging,Standard,Standard
 Cairan vape,Super Sensitive,20000000,3824.99.99/8543.90.90,N,5000,conditional,20jt/CBM - min 0.5 CBM - MAX 1 CBM/container,Specialized DG packaging,BPOM + cukai 57% + NPPBKC,Standard
 Arak (minuman beralkohol),Super Sensitive,20000000,2203-2208,N,5000,conditional,20jt/CBM - min 0.5 CBM - jalur availability uncertain,Standard,Permendag 22/2025 (bahan baku) + NPPBKC + cukai,Standard
-Rokok,Rokok,30000000,2402,N,5000,conditional,Per slop Rp 100000 OR 30jt/CBM - min 0.5 CBM per pengiriman,Standard,NPPBKC + cukai + BPOM (zat adiktif),Standard
+Rokok,Rokok,0,2402,N,5000,conditional,"CONDITIONAL ONLY - no upfront price. Verifikasi NPPBKC + BPOM customer dulu, escalate ke Vin/owner",Standard,NPPBKC + cukai + BPOM (zat adiktif),Standard
 Mobil listrik,REJECT,0,8703.80,N,N/A,reject,Auto-reject - regulated,N/A,Various permits required,N/A
 Solar mini car,REJECT,0,8703,N,N/A,reject,Auto-reject,N/A,N/A,N/A
 Barang bekas,REJECT,0,N/A,N,N/A,reject,Permendag 24/2025 - blanket reject,N/A,Permendag 24/2025,N/A

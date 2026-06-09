@@ -25,6 +25,8 @@ def _parse_id_list(raw: str | None) -> list[int]:
 TELEGRAM_BOT_TOKEN: str = os.environ["TELEGRAM_BOT_TOKEN"]
 ANTHROPIC_API_KEY: str = os.environ["ANTHROPIC_API_KEY"]
 ANTHROPIC_MODEL: str = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-6")
+# Cheaper model for structured/non-customer-facing tasks (propose_kb_update).
+ANTHROPIC_MODEL_FAST: str = os.getenv("ANTHROPIC_MODEL_FAST", "claude-haiku-4-5")
 
 LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO").upper()
 ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")

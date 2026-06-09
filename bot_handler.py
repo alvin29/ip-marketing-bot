@@ -788,37 +788,37 @@ async def cmd_reload_kb(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
 
 async def cmd_today(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Admin command: rekap semua inquiry hari ini."""
+    """Admin command: rekap inquiry hari ini — baca dari Sheet conversations tab.
+
+    Sheet adalah source of truth (persisten lintas restart Render).
+    Local JSONL fallback gak dipake di sini karena bakal ke-wipe tiap deploy.
+    """
     if not _whitelist_guard(update):
         return
     user = update.effective_user
     if not user or not config.is_admin(user.id):
         return
 
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+    if sheets is None:
+        await update.effective_chat.send_message(
+            "Sheets backend tidak aktif — `/today` butuh Sheets.",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
     from datetime import date
-    import json as _json
-
     today = date.today().isoformat()
-    if not CONVERSATION_LOG.exists():
-        await update.effective_chat.send_message("Belum ada log hari ini.")
+
+    try:
+        ws = sheets._tab(config.SHEET_TAB_CONV)
+        rows = ws.get_all_records()
+    except Exception as exc:
+        await update.effective_chat.send_message(f"Gagal baca Sheet: {exc}")
         return
 
-    entries: list[dict] = []
-    try:
-        with CONVERSATION_LOG.open(encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    obj = _json.loads(line)
-                except _json.JSONDecodeError:
-                    continue
-                if (obj.get("ts") or "").startswith(today):
-                    entries.append(obj)
-    except OSError as exc:
-        await update.effective_chat.send_message(f"Gagal baca log: {exc}")
-        return
+    # Filter rows where ts_utc starts with today's date (ISO format)
+    entries = [r for r in rows if str(r.get("ts_utc", "")).startswith(today)]
 
     if not entries:
         await update.effective_chat.send_message(
@@ -826,31 +826,24 @@ async def cmd_today(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         )
         return
 
-    # Group by user
-    from collections import Counter
-    by_user: dict[int, list[dict]] = {}
+    # Group by user (Telegram user_id)
+    by_user: dict[str, list[dict]] = {}
     for e in entries:
-        uid = e.get("user_id") or 0
+        uid = str(e.get("user_id") or "0")
         by_user.setdefault(uid, []).append(e)
-
-    flagged_unknown = sum(len(e.get("unknown_items") or []) for e in entries)
 
     lines = [
         f"*Rekap inquiry hari ini ({today})*",
         f"Total: {len(entries)} inquiry dari {len(by_user)} orang",
+        "",
     ]
-    if flagged_unknown:
-        lines.append(
-            f"⚠️ {flagged_unknown} item di-flag sebagai unknown (cek tab pending_items)"
-        )
-    lines.append("")
 
     for uid, items in by_user.items():
-        uname = items[0].get("username") or f"user_{uid}"
-        lines.append(f"*@{uname}* ({len(items)} inquiry):")
-        for e in items[-10:]:  # max 10 per user, kalau lebih dari 10 ambil terakhir
-            ts = (e.get("ts") or "")[11:16]  # HH:MM
-            inq = (e.get("inquiry") or "")[:80]
+        uname = items[0].get("username") or items[0].get("first_name") or f"user_{uid}"
+        lines.append(f"*{uname}* ({len(items)} inquiry):")
+        for e in items[-10:]:
+            ts = str(e.get("ts_utc", ""))[11:16]  # HH:MM
+            inq = str(e.get("inquiry", ""))[:80]
             lines.append(f"  • `{ts}` {inq}")
         if len(items) > 10:
             lines.append(f"  ... dan {len(items) - 10} lainnya")

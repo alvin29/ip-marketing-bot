@@ -2,7 +2,7 @@ services:
   - type: worker
     name: ip-marketing-bot
     runtime: python
-    plan: free
+    plan: starter
     region: singapore
     branch: main
     buildCommand: pip install -r requirements.txt
@@ -16,6 +16,8 @@ services:
         sync: false
       - key: ANTHROPIC_MODEL
         value: claude-sonnet-4-6
+      - key: ANTHROPIC_MODEL_FAST
+        value: claude-haiku-4-5
       - key: LOG_LEVEL
         value: INFO
       - key: ENVIRONMENT

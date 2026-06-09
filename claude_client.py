@@ -16,13 +16,11 @@ from knowledge_loader import get_full_system_prompt
 logger = logging.getLogger(__name__)
 
 _USER_CONTEXT_TEMPLATE = (
-    "Kamu adalah IP Marketing AI Agent di Telegram. User mengirim inquiry "
-    "via Telegram grup internal testing.\n\n"
-    "Hasilkan output 2 layer:\n"
-    "[UNTUK MARKETING] - internal notes\n"
-    "[FORWARD-READY] - pesan untuk customer (yang nanti di-forward marketing)\n\n"
-    "Inquiry user:\n"
-    "{user_message}"
+    "Inquiry dari marketing:\n"
+    "{user_message}\n\n"
+    "Output format WAJIB ikuti instruksi system: 4 baris pokok "
+    "(Klasifikasi/Harga/Container/HS Code) + max 1 baris note. "
+    "JANGAN tanya balik. JANGAN format 2-layer."
 )
 
 
@@ -184,10 +182,13 @@ class ClaudeClient:
             "Keluarkan JSON usulan KB update sekarang."
         )
 
+        # Use the cheaper "fast" model (Haiku) for this structured-output task.
+        # Schema is tight, validation is strict — Haiku is plenty.
+        fast_model = config.ANTHROPIC_MODEL_FAST
         t0 = time.monotonic()
         try:
             response = await self._client.messages.create(
-                model=self.model,
+                model=fast_model,
                 max_tokens=1500,
                 system=[
                     {
@@ -234,6 +235,7 @@ class ClaudeClient:
             kb_row={k: str(v) for k, v in (data.get("kb_row") or {}).items()},
             latency_ms=latency_ms,
             raw=raw,
+            model=fast_model,
         )
 
 
@@ -243,5 +245,6 @@ class KbProposal:
     reasoning: str
     latency_ms: int
     raw: str
+    model: str = ""
     match_item: str | None = None
     kb_row: dict[str, str] = field(default_factory=dict)
