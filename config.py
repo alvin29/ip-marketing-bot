@@ -51,13 +51,32 @@ TELEGRAM_MAX_MESSAGE_LEN: int = 4000
 # ─── Google Sheets backend ───────────────────────────────────────────────
 GSHEET_ID: str = os.getenv("GSHEET_ID", "")
 
-# Credentials file path. Absolute path is used as-is (for Render Secret Files
-# mounted at /etc/secrets/...). Relative path is anchored to BASE_DIR.
-_cred_raw = os.getenv("GOOGLE_CREDENTIALS_FILE", "secrets/service_account.json")
-_cred_path = Path(_cred_raw)
-GOOGLE_CREDENTIALS_FILE: Path = (
-    _cred_path if _cred_path.is_absolute() else BASE_DIR / _cred_path
-)
+# Credentials can come from EITHER:
+#   1. A file path (local dev, Render Secret Files)  → GOOGLE_CREDENTIALS_FILE
+#   2. The raw JSON contents in an env var (Fly.io)  → GOOGLE_CREDENTIALS_JSON
+#
+# If option 2 is set, we materialize a temp file from it on startup so the
+# downstream gspread/google-auth code doesn't need to change.
+import base64 as _base64
+
+_json_blob = os.getenv("GOOGLE_CREDENTIALS_JSON")
+if not _json_blob:
+    # Also accept base64-encoded variant (avoids newline issues in some PaaS UIs)
+    _b64 = os.getenv("GOOGLE_CREDENTIALS_JSON_B64")
+    if _b64:
+        _json_blob = _base64.b64decode(_b64).decode("utf-8")
+
+if _json_blob:
+    _tmp_path = Path("/tmp/service_account.json")
+    _tmp_path.write_text(_json_blob, encoding="utf-8")
+    GOOGLE_CREDENTIALS_FILE: Path = _tmp_path
+else:
+    _cred_raw = os.getenv("GOOGLE_CREDENTIALS_FILE", "secrets/service_account.json")
+    _cred_path = Path(_cred_raw)
+    GOOGLE_CREDENTIALS_FILE = (
+        _cred_path if _cred_path.is_absolute() else BASE_DIR / _cred_path
+    )
+
 KB_REFRESH_SECONDS: int = int(os.getenv("KB_REFRESH_SECONDS", "600"))
 
 # Sheet tab names — keep in sync with sheets_client.bootstrap_sheet()

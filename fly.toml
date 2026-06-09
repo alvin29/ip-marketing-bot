@@ -1,0 +1,20 @@
+# Fly.io config for IP Marketing Bot.
+# After `fly launch`, edit `app = "..."` to match the unique name Fly assigns.
+app = "ip-marketing-bot"
+primary_region = "sin"  # Singapore
+
+[build]
+
+[env]
+  ANTHROPIC_MODEL = "claude-sonnet-4-6"
+  LOG_LEVEL = "INFO"
+  ENVIRONMENT = "production"
+  BOT_USERNAME = "Ip_marketing_bot"
+  KB_REFRESH_SECONDS = "600"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+
+# No public HTTP service — bot uses Telegram long-polling.
+# Telegram bot tokens are set via `fly secrets set` (not in this file).

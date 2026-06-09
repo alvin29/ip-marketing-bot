@@ -1,0 +1,13 @@
+.env
+.env.*
+secrets/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+logs/
+.DS_Store
+.vscode/
+.idea/
