@@ -179,3 +179,75 @@ Mobil listrik,REJECT,0,8703.80,N,N/A,reject,Auto-reject - regulated,N/A,Various 
 Solar mini car,REJECT,0,8703,N,N/A,reject,Auto-reject,N/A,N/A,N/A
 Barang bekas,REJECT,0,N/A,N,N/A,reject,Permendag 24/2025 - blanket reject,N/A,Permendag 24/2025,N/A
 Replika senjata identifiable,REJECT,0,9303-9304,N,N/A,reject,Auto-reject - safety + regulatory,N/A,Kemenhan Polri,Standard
+Biji kopi,Kosmetik Makanan,8000000,0901.11,N,5000,auto,Added overnight workflow. Coffee beans common F&B import,Standard,Standard,Standard
+Susu bubuk,Kosmetik Makanan,8000000,0402.10,N,5000,auto,Added overnight workflow. Milk powder for bakery,Standard,Standard,Standard
+Snack import,Kosmetik Makanan,8000000,1905.90,N,5000,auto,Added overnight workflow. Imported snacks,Standard,Standard,Standard
+Manisan buah,Kosmetik Makanan,8000000,2008.99,N,5000,auto,Added overnight workflow. Preserved fruits,Standard,Standard,Standard
+Sirup,Kosmetik Makanan,8000000,2106.90,N,5000,auto,Added overnight workflow. Flavored syrups,Standard,Standard,Standard
+Gula,Kosmetik Makanan,8000000,1701.99,N,5000,auto,Added overnight workflow. Sugar imports,Standard,Standard,Standard
+Biji-bijian (kacang almond/mete),Kosmetik Makanan,8000000,0802.12,N,5000,auto,Added overnight workflow. Nuts and seeds,Standard,Standard,Standard
+Teh celup/teh kering,Kosmetik Makanan,8000000,0902.30,N,5000,auto,Added overnight workflow. Chinese tea,Standard,Standard,Standard
+Catokan rambut,Lartas Ringan,6000000,8516.32,N,5000,auto,Added overnight workflow. Hair straightener,Standard,Standard,Standard
+Hair curler elektrik,Lartas Ringan,6000000,8516.32,N,5000,auto,Added overnight workflow. Electric curling wand,Standard,Standard,Standard
+Gunting kuku set,Lartas Berat,6500000,8214.20,N,5000,auto,Added overnight workflow. Nail clipper sets,Standard,Standard,Standard
+Sisir elektrik,Lartas Ringan,6000000,8516.32,N,5000,auto,Added overnight workflow. Electric combs,Standard,Standard,Standard
+Alat cukur elektrik,Lartas Ringan,6000000,8510.10,N,5000,auto,Added overnight workflow. Electric shavers,Standard,Standard,Standard
+Epilator/IPL hair removal,Lartas Ringan,6000000,8543.70,N,5000,auto,Added overnight workflow. Home IPL devices,Standard,Standard,Standard
+Sisir/sikat rambut biasa,Umum 1,4500000,9615.11,N,5000,auto,Added overnight workflow. Non-electric combs,Standard,Standard,Standard
+Cermin rias kosmetik,Umum 2,5500000,7009.92,N,5000,auto,Added overnight workflow. Vanity mirrors,Standard,Standard,Standard
+Treadmill,Lartas Ringan,6000000,9506.91,N,5000,auto,Added overnight workflow. Home gym treadmill,Standard,Standard,Standard
+Dumbbell besi,Lartas Ringan,6000000,9506.91,N,5000,auto,Added overnight workflow. Iron dumbbells,Standard,Standard,Standard
+Jump rope,Umum 1,4500000,9506.91,N,5000,auto,Added overnight workflow. Skipping rope,Standard,Standard,Standard
+Matras yoga thick (TPE/EVA),Umum 1,4500000,3926.90,N,5000,auto,Added overnight workflow. Yoga mat TPE/EVA,Standard,Standard,Standard
+Sepeda statis/spinning bike,Lartas Ringan,6000000,9506.91,N,5000,auto,Added overnight workflow. Stationary bike,Standard,Standard,Standard
+Resistance band,Umum 1,4500000,9506.91,N,5000,auto,Added overnight workflow. Fitness elastic,Standard,Standard,Standard
+Bola sepak/futsal,Umum 1,4500000,9506.62,N,5000,auto,Added overnight workflow. Sports balls,Standard,Standard,Standard
+Sarung tinju (boxing gloves),Umum 1,4500000,9506.99,N,5000,auto,Added overnight workflow. Boxing gloves,Standard,Standard,Standard
+Stroller bayi,Lartas Ringan,6000000,8715.00.10,N,5000,auto,Added overnight workflow. Baby stroller,Standard,Standard,Standard
+Car seat bayi,Umum 2,5500000,9401.80.00,N,5000,auto,Added overnight workflow. Baby car seat,Standard,Standard,Standard
+Baby walker,Lartas Ringan,6000000,9503.00.10,N,5000,auto,Added overnight workflow. Baby walker,Standard,Standard,Standard
+Dot botol bayi,Lartas Ringan,6000000,4014.90.00,N,5000,auto,Added overnight workflow. Baby bottle,Standard,Standard,Standard
+Baby monitor,Lartas Ringan,6000000,8525.89.00,N,5000,auto,Added overnight workflow. Wireless baby monitor,Standard,Standard,Standard
+Empeng bayi (pacifier),Lartas Ringan,6000000,3924.90.90,N,5000,auto,Added overnight workflow. Baby pacifier,Standard,Standard,Standard
+Box bayi / baby crib,Umum 2,5500000,9403.50.00,N,5000,auto,Added overnight workflow. Baby crib,Standard,Standard,Standard
+Gendongan bayi,Semi Garment,7500000,6307.90.90,N,5000,auto,Added overnight workflow. Baby carrier,Standard,Standard,Standard
+Kandang plastik hewan,Umum 1,4500000,3926.90.99,N,5000,auto,Added overnight workflow. Pet carrier plastic,Standard,Standard,Standard
+Mainan kucing,Lartas Ringan,6000000,9503.00.99,N,5000,auto,Added overnight workflow. Cat toys,Standard,Standard,Standard
+Collar leash hewan,Umum 2,5500000,4201.00.00,N,5000,auto,Added overnight workflow. Pet collar leash,Standard,Standard,Standard
+Tempat makan stainless hewan,Lartas Ringan,6000000,7323.93,N,5000,auto,Added overnight workflow. Stainless pet bowl,Standard,Standard,Standard
+Litter box kucing,Umum 1,4500000,3924.90.90,N,5000,auto,Added overnight workflow. Cat litter box,Standard,Standard,Standard
+Scratching post kucing,Umum 2,5500000,4421.99,N,5000,auto,Added overnight workflow. Cat scratching post,Standard,Standard,Standard
+Baju hewan peliharaan,Semi Garment,7500000,6307.90,N,5000,auto,Added overnight workflow. Pet clothes,Standard,Standard,Standard
+Grooming kit hewan,Lartas Ringan,6000000,9603.90,N,5000,auto,Added overnight workflow. Pet grooming tools,Standard,Standard,Standard
+Rice cooker,Lartas Ringan,6000000,8516.60.10,N,5000,auto,Added overnight workflow. Electric rice cooker,Standard,Standard,Standard
+Blender,Lartas Ringan,6000000,8509.40.00,N,5000,auto,Added overnight workflow. Kitchen blender,Standard,Standard,Standard
+Food processor,Lartas Ringan,6000000,8509.40.00,N,5000,auto,Added overnight workflow. Food processor,Standard,Standard,Standard
+Mixer dapur,Lartas Ringan,6000000,8509.40.00,N,5000,auto,Added overnight workflow. Kitchen mixer,Standard,Standard,Standard
+Microwave oven,Lartas Ringan,6000000,8516.50.00,N,5000,auto,Added overnight workflow. Microwave oven,Standard,Standard,Standard
+Air fryer,Lartas Ringan,6000000,8516.60.90,N,5000,auto,Added overnight workflow. Air fryer,Standard,Standard,Standard
+Panci masak,Lartas Ringan,6000000,7615.10,N,5000,auto,Added overnight workflow. Cookware,Standard,Standard,Standard
+Pisau dapur,Lartas Berat,6500000,8211.92,N,5000,auto,Added overnight workflow. Kitchen knife,Standard,Standard,Standard
+Kalkulator,Lartas Ringan,6000000,8470.10,N,5000,auto,Added overnight workflow. Calculator,Standard,Standard,Standard
+File folder kertas,Umum 1,4500000,4820.30,N,5000,auto,Added overnight workflow. Paper folders,Standard,Standard,Standard
+Label printer,Lartas Ringan,6000000,8443.32,N,5000,auto,Added overnight workflow. Thermal label printer,Standard,Standard,Standard
+Paper shredder,Lartas Ringan,6000000,8472.90,N,5000,auto,Added overnight workflow. Paper shredder,Standard,Standard,Standard
+Stapler,Umum 1,4500000,8472.90,N,5000,auto,Added overnight workflow. Office stapler,Standard,Standard,Standard
+Pelubang kertas,Umum 1,4500000,8472.90,N,5000,auto,Added overnight workflow. Hole puncher,Standard,Standard,Standard
+Tinta printer,Hot Items,10000000,3215.90,N,5000,auto,Added overnight workflow. Printer ink,Standard,Standard,Standard
+Whiteboard,Umum 2,5500000,9610.00,N,5000,auto,Added overnight workflow. Whiteboard,Standard,Standard,Standard
+Vas bunga keramik,Umum 2,5500000,6913.10,N,5000,auto,Added overnight workflow. Ceramic vase,Standard,Standard,Standard
+Bingkai foto,Umum 2,5500000,4414.90.00,N,5000,auto,Added overnight workflow. Photo frames,Standard,Standard,Standard
+Jam dinding,Umum 1,4500000,9105.21,N,5000,auto,Added overnight workflow. Wall clock,Standard,Standard,Standard
+Cermin gantung,Umum 2,5500000,7009.92,N,5000,auto,Added overnight workflow. Hanging mirror,Standard,Standard,Standard
+Karpet kecil,Semi Garment,7500000,5703.90,N,5000,auto,Added overnight workflow. Small rugs,Standard,Standard,Standard
+Hiasan dinding kayu,Lartas Ringan,6000000,4420.19,N,5000,auto,Added overnight workflow. Wooden wall decor,Standard,Standard,Standard
+Patung resin dekorasi,Umum 2,5500000,3926.40,N,5000,auto,Added overnight workflow. Resin figurines,Standard,Standard,Standard
+Vas bunga kaca,Umum 2,5500000,7013.99,N,5000,auto,Added overnight workflow. Glass vase,Standard,Standard,Standard
+Tang (pliers),Lartas Berat,6500000,8203.20,N,5000,auto,Added overnight workflow. Pliers,Standard,Standard,Standard
+Palu (hammer),Lartas Berat,6500000,8205.20,N,5000,auto,Added overnight workflow. Hammer,Standard,Standard,Standard
+Obeng set (screwdriver),Lartas Berat,6500000,8205.40,N,5000,auto,Added overnight workflow. Screwdriver set,Standard,Standard,Standard
+Kunci pas (wrench set),Lartas Berat,6500000,8204.11,N,5000,auto,Added overnight workflow. Wrench set,Standard,Standard,Standard
+Mata bor (drill bit),Lartas Berat,6500000,8207.50,N,5000,auto,Added overnight workflow. Drill bit,Standard,Standard,Standard
+Gergaji (saw),Lartas Berat,6500000,8202.10,N,5000,auto,Added overnight workflow. Hand saw,Standard,Standard,Standard
+Bor listrik (electric drill),Lartas Berat,6500000,8467.21,N,5000,auto,Added overnight workflow. Electric drill,Standard,Standard,Standard
+Gerinda tangan (angle grinder),Lartas Berat,6500000,8467.29,N,5000,auto,Added overnight workflow. Angle grinder,Standard,Standard,Standard

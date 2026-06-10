@@ -863,11 +863,25 @@ async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if is_admin_grp:
         base += (
             "*Admin commands (di grup ini)*\n"
-            "• `/correct <teks>` — reply ke pesan mirror, lalu koreksi\n"
-            "• `/status` `/pause` `/resume` `/reload_kb` `/kb_add`\n\n"
+            "Feedback flow:\n"
+            "• `/correct <teks>` — reply ke pesan mirror, lalu koreksi\n\n"
+            "Status & ops:\n"
+            "• `/status` `/pause` `/resume` `/reload_kb` `/diag`\n\n"
+            "KB introspection:\n"
+            "• `/find <kata>` — cari item by name\n"
+            "• `/tier <nama>` — list items per tier\n"
+            "• `/search_hs <kode>` — cari by HS code\n"
+            "• `/kbcount` — breakdown total per tier\n"
+            "• `/pending` — 10 unknown item terakhir (escalate queue)\n"
+            "• `/today` — rekap inquiry hari ini\n"
+            "• `/digest` — summary kemarin\n\n"
+            "Manual KB:\n"
+            "• `/kb_add` — tambah item manual (skip AI proposal)\n\n"
             "Setiap inquiry dari grup marketing otomatis ke-mirror di sini "
             "dengan tombol 👍/👎/📝. Kalau klik 👎 atau 📝, bot bakal "
-            "ngingetin kasih `/correct`."
+            "ngingetin kasih `/correct`.\n\n"
+            "*Photo support:* kirim foto dengan caption `/quote ...` di grup "
+            "marketing — bot identify barang dari foto + klasifikasi."
         )
     else:
         base += (
@@ -1131,6 +1145,423 @@ async def cmd_kb_add(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
     )
 
 
+# ─── Overnight workflow commands (KB introspection, no Claude calls) ─────
+
+async def cmd_find(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin: case-insensitive substring search KB by item name.
+
+    Usage: `/find <query>`
+    Prefers Sheets KB; falls back to local CSV via knowledge_loader.
+    """
+    if not _whitelist_guard(update):
+        return
+    user = update.effective_user
+    if not user or not config.is_admin(user.id):
+        return
+
+    query = (" ".join(context.args) if context.args else "").strip()
+    if not query:
+        await update.effective_chat.send_message(
+            "Format: `/find <kata kunci>`\nContoh: `/find sepatu`",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+    rows: list[dict[str, str]] = []
+    source = "local CSV"
+    if sheets is not None:
+        try:
+            rows = sheets.get_kb_rows()
+            source = "Google Sheets"
+        except Exception as exc:
+            logger.warning("/find: Sheets read failed (%s) — falling back to CSV", exc)
+
+    if not rows:
+        import csv as _csv
+        import io as _io
+        import knowledge_loader
+        try:
+            text = knowledge_loader._rules_csv_text()
+            reader = _csv.DictReader(_io.StringIO(text))
+            rows = [{k: (v or "") for k, v in r.items()} for r in reader]
+        except Exception as exc:
+            await update.effective_chat.send_message(f"Gagal baca KB: {exc}")
+            return
+
+    q_lower = query.lower()
+    matches = [r for r in rows if q_lower in str(r.get("item", "")).lower()]
+
+    if not matches:
+        await update.effective_chat.send_message(
+            f"Tidak ada item yang match `{query}` di KB ({source}).",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    lines = [f"*Hasil /find `{query}`* — {len(matches)} match (sumber: {source})", ""]
+    for r in matches[:40]:
+        item = str(r.get("item", "?"))
+        tier = str(r.get("tier", "?"))
+        price = str(r.get("price_per_cbm", "?"))
+        hs = str(r.get("hs_code_hint", "?"))
+        lines.append(f"• *{item}* — {tier} | {price} | HS {hs}")
+    if len(matches) > 40:
+        lines.append("")
+        lines.append(f"_(menampilkan 40 dari {len(matches)} match — sempitkan query)_")
+
+    await _send_long(context.bot, update.effective_chat.id, "\n".join(lines))
+
+
+async def cmd_tier(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin: list items in a given tier. Paginated by page number.
+
+    Usage: `/tier <tier_name> [page]`
+    Example: `/tier Umum 1` or `/tier Lartas Berat 2`
+    Tier name is matched case-insensitive substring.
+    """
+    if not _whitelist_guard(update):
+        return
+    user = update.effective_user
+    if not user or not config.is_admin(user.id):
+        return
+
+    args_text = (" ".join(context.args) if context.args else "").strip()
+    if not args_text:
+        await update.effective_chat.send_message(
+            "Format: `/tier <nama_tier> [page]`\n"
+            "Tier valid: Umum 1, Umum 2, Lartas Ringan, Lartas Berat, "
+            "Semi Garment, Kosmetik & Makanan, Garment, Hot Items, Tekstil, "
+            "Super Sensitive, Rokok",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    parts = args_text.rsplit(" ", 1)
+    page = 1
+    tier_query = args_text
+    if len(parts) == 2 and parts[1].isdigit():
+        tier_query = parts[0].strip()
+        page = max(1, int(parts[1]))
+
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+    rows: list[dict[str, str]] = []
+    source = "local CSV"
+    if sheets is not None:
+        try:
+            rows = sheets.get_kb_rows()
+            source = "Google Sheets"
+        except Exception as exc:
+            logger.warning("/tier: Sheets read failed (%s) — falling back to CSV", exc)
+
+    if not rows:
+        import csv as _csv
+        import io as _io
+        import knowledge_loader
+        try:
+            text = knowledge_loader._rules_csv_text()
+            reader = _csv.DictReader(_io.StringIO(text))
+            rows = [{k: (v or "") for k, v in r.items()} for r in reader]
+        except Exception as exc:
+            await update.effective_chat.send_message(f"Gagal baca KB: {exc}")
+            return
+
+    tq_lower = tier_query.lower()
+    matches = [r for r in rows if tq_lower in str(r.get("tier", "")).lower()]
+
+    if not matches:
+        await update.effective_chat.send_message(
+            f"Tidak ada item di tier `{tier_query}` (sumber: {source}).",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    page_size = 40
+    total_pages = (len(matches) + page_size - 1) // page_size
+    if page > total_pages:
+        page = total_pages
+    start = (page - 1) * page_size
+    end = start + page_size
+    page_rows = matches[start:end]
+
+    lines = [
+        f"*Tier `{tier_query}`* — {len(matches)} items (page {page}/{total_pages}, sumber: {source})",
+        "",
+    ]
+    for r in page_rows:
+        item = str(r.get("item", "?"))
+        hs = str(r.get("hs_code_hint", "?"))
+        price = str(r.get("price_per_cbm", "?"))
+        lines.append(f"• *{item}* — {price} | HS {hs}")
+    if total_pages > 1 and page < total_pages:
+        lines.append("")
+        lines.append(f"_Next: `/tier {tier_query} {page + 1}`_")
+
+    await _send_long(context.bot, update.effective_chat.id, "\n".join(lines))
+
+
+async def cmd_search_hs(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin: search KB items by HS code substring.
+
+    Usage: `/search_hs <code>`
+    Example: `/search_hs 9401` -> all chair-related items.
+    """
+    if not _whitelist_guard(update):
+        return
+    user = update.effective_user
+    if not user or not config.is_admin(user.id):
+        return
+
+    query = (" ".join(context.args) if context.args else "").strip()
+    if not query:
+        await update.effective_chat.send_message(
+            "Format: `/search_hs <kode>`\nContoh: `/search_hs 9401`",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+    rows: list[dict[str, str]] = []
+    source = "local CSV"
+    if sheets is not None:
+        try:
+            rows = sheets.get_kb_rows()
+            source = "Google Sheets"
+        except Exception as exc:
+            logger.warning("/search_hs: Sheets read failed (%s) — falling back", exc)
+
+    if not rows:
+        import csv as _csv
+        import io as _io
+        import knowledge_loader
+        try:
+            text = knowledge_loader._rules_csv_text()
+            reader = _csv.DictReader(_io.StringIO(text))
+            rows = [{k: (v or "") for k, v in r.items()} for r in reader]
+        except Exception as exc:
+            await update.effective_chat.send_message(f"Gagal baca KB: {exc}")
+            return
+
+    q_lower = query.lower()
+    matches = [r for r in rows if q_lower in str(r.get("hs_code_hint", "")).lower()]
+
+    if not matches:
+        await update.effective_chat.send_message(
+            f"Tidak ada item dengan HS code yang mengandung `{query}` (sumber: {source}).",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    lines = [
+        f"*Hasil /search_hs `{query}`* — {len(matches)} match (sumber: {source})",
+        "",
+    ]
+    for r in matches[:40]:
+        item = str(r.get("item", "?"))
+        tier = str(r.get("tier", "?"))
+        hs = str(r.get("hs_code_hint", "?"))
+        lines.append(f"• HS `{hs}` — *{item}* ({tier})")
+    if len(matches) > 40:
+        lines.append("")
+        lines.append(f"_(menampilkan 40 dari {len(matches)} match)_")
+
+    await _send_long(context.bot, update.effective_chat.id, "\n".join(lines))
+
+
+async def cmd_pending(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin: show the last 10 pending_items entries (NEEDS_KB_ENTRY flags).
+
+    Requires Sheets backend (pending_items lives on the Sheet).
+    """
+    if not _whitelist_guard(update):
+        return
+    user = update.effective_user
+    if not user or not config.is_admin(user.id):
+        return
+
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+    if sheets is None:
+        await update.effective_chat.send_message(
+            "Sheets backend tidak aktif — `/pending` butuh Sheets.",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    try:
+        ws = sheets._tab(config.SHEET_TAB_PENDING)
+        rows = ws.get_all_records()
+    except Exception as exc:
+        await update.effective_chat.send_message(f"Gagal baca Sheet pending_items: {exc}")
+        return
+
+    if not rows:
+        await update.effective_chat.send_message("Belum ada pending items. KB rapih semua kak.")
+        return
+
+    last10 = rows[-10:]
+    new_count = sum(1 for r in rows if str(r.get("status", "")).lower() == "new")
+
+    lines = [
+        f"*Pending items* — total {len(rows)} ({new_count} status=new)",
+        "_Menampilkan 10 entri terakhir:_",
+        "",
+    ]
+    for r in reversed(last10):
+        ts = str(r.get("ts_utc", ""))[:16].replace("T", " ")
+        item = str(r.get("detected_item", "?"))
+        status = str(r.get("status", "?"))
+        ctx_snippet = str(r.get("context", ""))[:80]
+        lines.append(f"• `{ts}` *{item}* — {status}")
+        if ctx_snippet:
+            lines.append(f"    _ctx: {ctx_snippet}_")
+
+    await _send_long(context.bot, update.effective_chat.id, "\n".join(lines))
+
+
+async def cmd_digest(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin: yesterday's summary.
+
+    Output: inquiry count, top 5 users, count of new pending_items.
+    Source: Sheet conversations + pending_items tabs.
+    """
+    if not _whitelist_guard(update):
+        return
+    user = update.effective_user
+    if not user or not config.is_admin(user.id):
+        return
+
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+    if sheets is None:
+        await update.effective_chat.send_message(
+            "Sheets backend tidak aktif — `/digest` butuh Sheets.",
+            parse_mode=constants.ParseMode.MARKDOWN,
+        )
+        return
+
+    from datetime import date, timedelta
+    yesterday = (date.today() - timedelta(days=1)).isoformat()
+
+    try:
+        conv_ws = sheets._tab(config.SHEET_TAB_CONV)
+        conv_rows = conv_ws.get_all_records()
+    except Exception as exc:
+        await update.effective_chat.send_message(f"Gagal baca conversations: {exc}")
+        return
+
+    y_convs = [r for r in conv_rows if str(r.get("ts_utc", "")).startswith(yesterday)]
+
+    try:
+        pend_ws = sheets._tab(config.SHEET_TAB_PENDING)
+        pend_rows = pend_ws.get_all_records()
+        y_pending = [r for r in pend_rows if str(r.get("ts_utc", "")).startswith(yesterday)]
+    except Exception as exc:
+        logger.warning("/digest: pending read failed (%s)", exc)
+        y_pending = []
+
+    if not y_convs and not y_pending:
+        await update.effective_chat.send_message(
+            f"Gak ada aktivitas kemarin ({yesterday})."
+        )
+        return
+
+    by_user: dict[str, int] = {}
+    name_for: dict[str, str] = {}
+    for r in y_convs:
+        uid = str(r.get("user_id") or "0")
+        by_user[uid] = by_user.get(uid, 0) + 1
+        if uid not in name_for:
+            name_for[uid] = (
+                str(r.get("username") or "")
+                or str(r.get("first_name") or "")
+                or f"user_{uid}"
+            )
+    top_users = sorted(by_user.items(), key=lambda kv: kv[1], reverse=True)[:5]
+
+    unique_users = len(by_user)
+    new_unknowns = sum(1 for r in y_pending if str(r.get("status", "")).lower() == "new")
+
+    lines = [
+        f"*Digest {yesterday}*",
+        "",
+        f"• Total inquiry: *{len(y_convs)}*",
+        f"• Unique users: *{unique_users}*",
+        f"• Unknown items (NEEDS_KB_ENTRY): *{len(y_pending)}* ({new_unknowns} status=new)",
+        "",
+    ]
+    if top_users:
+        lines.append("*Top users:*")
+        for uid, count in top_users:
+            uname = name_for.get(uid, f"user_{uid}")
+            lines.append(f"  • {uname} — {count} inquiry")
+
+    await _send_long(context.bot, update.effective_chat.id, "\n".join(lines))
+
+
+async def cmd_kbcount(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin: KB breakdown by tier — total + count per tier.
+
+    Falls back to local CSV via knowledge_loader if Sheets is unavailable.
+    """
+    if not _whitelist_guard(update):
+        return
+    user = update.effective_user
+    if not user or not config.is_admin(user.id):
+        return
+
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+    rows: list[dict[str, str]] = []
+    source = "local CSV"
+    if sheets is not None:
+        try:
+            rows = sheets.get_kb_rows()
+            source = "Google Sheets"
+        except Exception as exc:
+            logger.warning("/kbcount: Sheets read failed (%s) — falling back", exc)
+
+    if not rows:
+        import csv as _csv
+        import io as _io
+        import knowledge_loader
+        try:
+            text = knowledge_loader._rules_csv_text()
+            reader = _csv.DictReader(_io.StringIO(text))
+            rows = [{k: (v or "") for k, v in r.items()} for r in reader]
+        except Exception as exc:
+            await update.effective_chat.send_message(f"Gagal baca KB: {exc}")
+            return
+
+    by_tier: dict[str, int] = {}
+    for r in rows:
+        tier = str(r.get("tier", "")).strip() or "(kosong)"
+        by_tier[tier] = by_tier.get(tier, 0) + 1
+
+    tier_order = [
+        "Umum 1", "Umum 2", "Lartas Ringan", "Lartas Berat",
+        "Semi Garment", "Kosmetik & Makanan", "Garment",
+        "Hot Items", "Tekstil", "Super Sensitive", "Rokok",
+    ]
+    ordered: list[tuple[str, int]] = []
+    seen: set[str] = set()
+    for t in tier_order:
+        if t in by_tier:
+            ordered.append((t, by_tier[t]))
+            seen.add(t)
+    extras = sorted(
+        ((t, c) for t, c in by_tier.items() if t not in seen),
+        key=lambda kv: kv[1], reverse=True,
+    )
+    ordered.extend(extras)
+
+    lines = [
+        f"*KB breakdown* — total {len(rows)} rows (sumber: {source})",
+        "",
+    ]
+    for tier, count in ordered:
+        lines.append(f"• {tier}: *{count}*")
+
+    await _send_long(context.bot, update.effective_chat.id, "\n".join(lines))
+
+
 # ─── Mention handler ─────────────────────────────────────────────────────
 
 async def handle_mention(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -1162,6 +1593,12 @@ def build_application(sheets_client: SheetsClient | None = None) -> Application:
     app.add_handler(CommandHandler("correct", cmd_correct))
     app.add_handler(CommandHandler("today", cmd_today))
     app.add_handler(CommandHandler("diag", cmd_diag))
+    app.add_handler(CommandHandler("find", cmd_find))
+    app.add_handler(CommandHandler("tier", cmd_tier))
+    app.add_handler(CommandHandler("search_hs", cmd_search_hs))
+    app.add_handler(CommandHandler("pending", cmd_pending))
+    app.add_handler(CommandHandler("digest", cmd_digest))
+    app.add_handler(CommandHandler("kbcount", cmd_kbcount))
 
     app.add_handler(CallbackQueryHandler(on_feedback_button, pattern=r"^fb:"))
     app.add_handler(CallbackQueryHandler(on_proposal_button, pattern=r"^pr:"))
