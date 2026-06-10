@@ -117,13 +117,24 @@ Kalau masih ada Terminal di laptop Bapak yang jalanin `python main.py`, tekan **
 
 ## 📋 Yang udah dikerjain semalam (tanpa Bapak)
 
-Liat `PROJECT_STATUS.md` untuk detail lengkap. Singkatnya:
+Liat `OVERNIGHT_SUMMARY.md` untuk detail per item, dan `PROJECT_STATUS.md` untuk handoff lengkap.
 
-- Workflow multi-agent generate **30+ KB item baru** (verified 3-lens: tier+HS+container)
-- **Master prompt polish** — beberapa edit surgical
-- **New bot commands** — `/diag` (di atas tadi), `/find`, `/health`, `/tier`, dll (jumlah final tergantung workflow output)
-- **Startup diagnostics** lebih jelas di Render logs
-- Semua ke-commit + push otomatis, Render udah re-deploy
+Highlights:
+
+- **+72 KB item baru** — KB sekarang 254 rows (was 182). Verified 3-lens (tier, HS Code, container) oleh workflow 219 sub-agents. Coverage tambah di: food & beverage, beauty appliances, sports & fitness, baby gear, pet supplies, kitchen tools, office, decor, hand tools.
+- **Master prompt polish** — 8 surgical edits: tighter no-questions rule, Ch 50-63 textile overlap fixed, container default rule made deterministic, REJECT list expanded, deprecated 2-layer reference removed.
+- **6 admin commands baru** (no Claude API cost):
+  - `/find <kata>` — cari item di KB
+  - `/tier <nama>` — list per tier
+  - `/search_hs <kode>` — cari by HS code
+  - `/pending` — 10 unknown items terakhir (escalate queue)
+  - `/digest` — summary kemarin
+  - `/kbcount` — breakdown per tier
+- **Vision support** — `/quote + foto produk` di grup Marketing → bot identify barang + classify. Foto otomatis di-forward ke grup admin sebagai context.
+- **`/diag` command** — admin cek bot status real-time
+- **Startup logs** lebih jelas — kalau Sheets gagal, log eksplisit kasih tau env var mana yang missing
+
+Render udah auto-redeploy (4 commits ke-push semalam). Bot sekarang punya semua fitur baru — tinggal Bapak fix 2 env var di step 2-3 di atas.
 
 ---
 
