@@ -18,14 +18,30 @@ def configure_logging() -> None:
 
 
 def _init_sheets():
-    """Try to bring up the Sheets backend. Returns SheetsClient or None."""
+    """Try to bring up the Sheets backend. Returns SheetsClient or None.
+
+    Logs are EXPLICIT about what's missing so the operator can see exactly
+    which env var or file to fix.
+    """
     log = logging.getLogger("main")
     if not config.sheets_enabled():
-        log.warning(
-            "Sheets backend NOT configured — falling back to local CSV. "
-            "Feedback buttons + KB writes will be disabled. "
-            "Set GSHEET_ID + place service account JSON to enable."
-        )
+        # Diagnose: which condition failed?
+        has_id = bool(config.GSHEET_ID)
+        has_file = config.GOOGLE_CREDENTIALS_FILE.exists()
+        log.warning("┌─ Sheets backend NOT configured ─────────────────────────┐")
+        log.warning("│ Bot will fall back to local CSV (read-only mode).        │")
+        log.warning("│ Feedback buttons, /correct flow, KB writes are DISABLED. │")
+        log.warning("├─ Diagnosis: ────────────────────────────────────────────┤")
+        log.warning("│   GSHEET_ID env var set?          %s", "YES" if has_id else "NO  <-- FIX THIS")
+        log.warning("│   Credentials file exists?        %s", "YES" if has_file else "NO  <-- FIX THIS")
+        log.warning("│   Expected path: %s", str(config.GOOGLE_CREDENTIALS_FILE))
+        log.warning("├─ To fix on Render: ─────────────────────────────────────┤")
+        log.warning("│ 1. Service → Environment tab:                            │")
+        log.warning("│      Set GSHEET_ID = 11o8DCv30AkKKsJqC1rCqm2ZHrKo5n_xSfRaY0MgApX0")
+        log.warning("│ 2. Same page, Secret Files section:                      │")
+        log.warning("│      Add filename 'service_account.json' with full JSON  │")
+        log.warning("│ 3. Render will auto-redeploy after save.                 │")
+        log.warning("└──────────────────────────────────────────────────────────┘")
         return None
 
     try:
@@ -39,7 +55,9 @@ def _init_sheets():
         return client
     except Exception as exc:
         log.exception(
-            "Failed to init Sheets backend: %s — falling back to local CSV.", exc,
+            "Sheets backend init FAILED: %s — falling back to local CSV. "
+            "Check: GSHEET_ID valid? Service account file readable? "
+            "Service account email shared on the Sheet as Editor?", exc,
         )
         return None
 

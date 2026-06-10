@@ -1,6 +1,7 @@
 """Async wrapper around the Anthropic API for the IP Marketing bot."""
 from __future__ import annotations
 
+import base64
 import json
 import logging
 import re
@@ -50,55 +51,17 @@ class ClaudeClient:
         self.model = model or config.ANTHROPIC_MODEL
         self.max_tokens = max_tokens
 
-    async def generate(self, user_message: str) -> ClaudeReply:
-        system_prompt = get_full_system_prompt()
-        user_content = _USER_CONTEXT_TEMPLATE.format(user_message=user_message)
-        t0 = time.monotonic()
+    def _build_system(self) -> list[dict[str, Any]]:
+        """System block with prompt caching enabled (saves ~10x on repeat calls)."""
+        return [
+            {
+                "type": "text",
+                "text": get_full_system_prompt(),
+                "cache_control": {"type": "ephemeral"},
+            }
+        ]
 
-        try:
-            response = await self._client.messages.create(
-                model=self.model,
-                max_tokens=self.max_tokens,
-                system=[
-                    {
-                        "type": "text",
-                        "text": system_prompt,
-                        "cache_control": {"type": "ephemeral"},
-                    }
-                ],
-                messages=[{"role": "user", "content": user_content}],
-            )
-        except RateLimitError as exc:
-            logger.warning("Anthropic rate limit: %s", exc)
-            return ClaudeReply(
-                text="⚠️ Sistem sedang ramai (rate limit). Coba lagi sebentar ya pak.",
-                latency_ms=int((time.monotonic() - t0) * 1000),
-                model=self.model,
-                unknown_items=[],
-            )
-        except APIStatusError as exc:
-            logger.exception("Anthropic API status error: %s", exc)
-            return ClaudeReply(
-                text=(
-                    "⚠️ Maaf, lagi ada gangguan di sisi AI. Coba ulang sebentar lagi "
-                    "atau langsung tanya ke Alvin ya pak."
-                ),
-                latency_ms=int((time.monotonic() - t0) * 1000),
-                model=self.model,
-                unknown_items=[],
-            )
-        except APIError as exc:
-            logger.exception("Anthropic API error: %s", exc)
-            return ClaudeReply(
-                text=(
-                    "⚠️ Maaf, ada error dari sisi AI. Coba ulang ya, kalau masih "
-                    "gagal langsung tanya ke Alvin."
-                ),
-                latency_ms=int((time.monotonic() - t0) * 1000),
-                model=self.model,
-                unknown_items=[],
-            )
-
+    def _parse_response(self, response, t0: float) -> ClaudeReply:
         latency_ms = int((time.monotonic() - t0) * 1000)
         parts = [
             block.text
@@ -106,18 +69,97 @@ class ClaudeClient:
             if getattr(block, "type", None) == "text"
         ]
         raw = "\n".join(parts).strip() or "(empty response)"
-
         unknown_items = [m.group("item").strip() for m in _NEEDS_KB_PATTERN.finditer(raw)]
         cleaned = _NEEDS_KB_PATTERN.sub("", raw).strip()
-        # Collapse any runs of blank lines left behind by the strip
         cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
-
         return ClaudeReply(
             text=cleaned,
             latency_ms=latency_ms,
             model=self.model,
             unknown_items=unknown_items,
         )
+
+    def _error_reply(self, text: str, t0: float) -> ClaudeReply:
+        return ClaudeReply(
+            text=text,
+            latency_ms=int((time.monotonic() - t0) * 1000),
+            model=self.model,
+            unknown_items=[],
+        )
+
+    async def generate(self, user_message: str) -> ClaudeReply:
+        user_content = _USER_CONTEXT_TEMPLATE.format(user_message=user_message)
+        t0 = time.monotonic()
+        try:
+            response = await self._client.messages.create(
+                model=self.model,
+                max_tokens=self.max_tokens,
+                system=self._build_system(),
+                messages=[{"role": "user", "content": user_content}],
+            )
+        except RateLimitError as exc:
+            logger.warning("Anthropic rate limit: %s", exc)
+            return self._error_reply("⚠️ Sistem sedang ramai (rate limit). Coba lagi sebentar ya kak.", t0)
+        except APIStatusError as exc:
+            logger.exception("Anthropic API status error: %s", exc)
+            return self._error_reply("⚠️ Maaf, lagi ada gangguan di sisi AI. Coba ulang sebentar lagi ya kak.", t0)
+        except APIError as exc:
+            logger.exception("Anthropic API error: %s", exc)
+            return self._error_reply("⚠️ Maaf, ada error dari sisi AI. Coba ulang ya kak.", t0)
+
+        return self._parse_response(response, t0)
+
+    async def generate_from_image(
+        self,
+        image_bytes: bytes,
+        media_type: str = "image/jpeg",
+        caption: str = "",
+    ) -> ClaudeReply:
+        """Classify based on a product image + optional caption.
+
+        Used by photo-message handler. Uses same 4-line output format as text
+        /quote (system prompt unchanged, cached).
+        """
+        b64 = base64.standard_b64encode(image_bytes).decode("ascii")
+        caption = (caption or "").strip()
+        user_text = (
+            "Inquiry dari marketing dengan FOTO PRODUK terlampir.\n"
+            f"Caption tambahan: {caption if caption else '(kosong)'}\n\n"
+            "Identifikasi barang dari foto, klasifikasi dengan format 4-baris standar. "
+            "Kalau foto blur / banyak barang berbeda / tidak jelas, sebutkan ambiguitas "
+            "di Note dan minta marketing kasih konteks tambahan (tier/HS code bisa "
+            "diisi '(perlu konfirmasi)')."
+        )
+        user_content = [
+            {
+                "type": "image",
+                "source": {
+                    "type": "base64",
+                    "media_type": media_type,
+                    "data": b64,
+                },
+            },
+            {"type": "text", "text": user_text},
+        ]
+        t0 = time.monotonic()
+        try:
+            response = await self._client.messages.create(
+                model=self.model,
+                max_tokens=self.max_tokens,
+                system=self._build_system(),
+                messages=[{"role": "user", "content": user_content}],
+            )
+        except RateLimitError as exc:
+            logger.warning("Anthropic rate limit (vision): %s", exc)
+            return self._error_reply("⚠️ Sistem sedang ramai. Coba kirim ulang foto ya kak.", t0)
+        except APIStatusError as exc:
+            logger.exception("Anthropic vision status error: %s", exc)
+            return self._error_reply("⚠️ Maaf, ada gangguan AI saat baca foto. Coba ulang ya kak.", t0)
+        except APIError as exc:
+            logger.exception("Anthropic vision error: %s", exc)
+            return self._error_reply("⚠️ Maaf, ada error AI saat baca foto. Coba ulang ya kak.", t0)
+
+        return self._parse_response(response, t0)
 
     async def propose_kb_update(
         self,

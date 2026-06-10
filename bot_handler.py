@@ -307,6 +307,162 @@ async def _handle_inquiry(
     })
 
 
+# ─── Photo inquiry handler ───────────────────────────────────────────────
+
+async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Photo with caption `/quote ...` (or @bot mention) triggers vision-based
+    classification. Same output + mirror flow as text /quote.
+
+    Photo WITHOUT trigger caption: silently ignored (saves cost, prevents noise).
+    """
+    if not _whitelist_guard(update):
+        return
+
+    msg = update.effective_message
+    if not msg or not msg.photo:
+        return
+
+    chat = update.effective_chat
+    user = update.effective_user
+    state: BotState = context.application.bot_data["state"]
+    client: ClaudeClient = context.application.bot_data["claude"]
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+
+    if state.paused:
+        return
+
+    caption = (msg.caption or "").strip()
+    bot_handle = f"@{config.BOT_USERNAME}"
+
+    is_quote_command = caption.startswith("/quote")
+    is_mention = bot_handle.lower() in caption.lower()
+    if not (is_quote_command or is_mention):
+        return  # photo without trigger -> ignore
+
+    # Extract inquiry text from caption (strip command / mention)
+    if is_quote_command:
+        inquiry = caption[len("/quote"):].strip()
+        # Strip possible @bot suffix on command itself: "/quote@Ip_marketing_bot ..."
+        if inquiry.startswith("@"):
+            parts = inquiry.split(None, 1)
+            inquiry = parts[1] if len(parts) > 1 else ""
+    else:
+        inquiry = caption.replace(bot_handle, "").replace(bot_handle.lower(), "").strip()
+
+    try:
+        await chat.send_action(constants.ChatAction.TYPING)
+    except Exception:
+        pass
+
+    photo = msg.photo[-1]  # largest size
+    logger.info(
+        "Photo inquiry chat=%s(%s) user=%s caption_len=%d size=%dx%d",
+        chat.id if chat else "?",
+        "ADMIN" if (chat and config.is_admin_chat(chat.id)) else "MARKETING",
+        user.id if user else "?",
+        len(inquiry),
+        photo.width, photo.height,
+    )
+
+    try:
+        file = await context.bot.get_file(photo.file_id)
+        image_bytes = bytes(await file.download_as_bytearray())
+    except Exception as exc:
+        logger.exception("Failed to download photo: %s", exc)
+        await chat.send_message("⚠️ Gagal download foto. Coba kirim ulang ya kak.")
+        return
+
+    reply: ClaudeReply = await client.generate_from_image(
+        image_bytes=image_bytes,
+        media_type="image/jpeg",
+        caption=inquiry,
+    )
+
+    conv_id = secrets.token_urlsafe(8)
+    marketing_response = await _send_long(context.bot, chat.id, reply.text)
+    marketing_response_msg_id = (
+        marketing_response.message_id if marketing_response else None
+    )
+
+    # Mirror to admin group, including the actual photo so admins see context
+    admin_mirror_msg_id: int | None = None
+    admin_chat_id = config.primary_admin_chat()
+    is_from_marketing = chat is not None and config.is_marketing_chat(chat.id)
+
+    if admin_chat_id is not None and is_from_marketing:
+        username = f"@{user.username}" if user and user.username else (
+            user.full_name if user else "anon"
+        )
+        try:
+            # Forward photo to admin chat for visual context
+            await context.bot.send_photo(
+                admin_chat_id,
+                photo=photo.file_id,
+                caption=f"📷 Foto dari {username} @ {chat.title or chat.id}",
+            )
+        except Exception as exc:
+            logger.warning("Could not forward photo to admin: %s", exc)
+
+        header = (
+            f"📥 *INQUIRY FOTO DARI MARKETING*\n"
+            f"From: {username}\n"
+            f"Caption: {inquiry or '(kosong)'}\n\n"
+            f"*Jawaban bot:*\n"
+        )
+        try:
+            mirror = await _send_long(
+                context.bot,
+                admin_chat_id,
+                header + reply.text,
+                reply_markup=_feedback_keyboard(conv_id),
+            )
+            if mirror:
+                admin_mirror_msg_id = mirror.message_id
+        except Exception as exc:
+            logger.exception("Mirror photo inquiry to admin failed: %s", exc)
+
+    inquiry_for_log = f"[PHOTO] {inquiry or '(no caption)'}"
+    state.remember_conv(ConvState(
+        conv_id=conv_id,
+        marketing_chat_id=chat.id if chat else 0,
+        marketing_chat_title=(chat.title if chat else "") or "",
+        marketing_user_id=user.id if user else 0,
+        marketing_username=user.username if user else None,
+        marketing_first_name=user.first_name if user else None,
+        inquiry=inquiry_for_log,
+        response=reply.text,
+        marketing_response_msg_id=marketing_response_msg_id,
+        admin_mirror_msg_id=admin_mirror_msg_id,
+    ))
+
+    if sheets is not None:
+        sheets.log_conversation(Conversation(
+            conv_id=conv_id,
+            chat_id=chat.id if chat else 0,
+            user_id=user.id if user else 0,
+            username=user.username if user else None,
+            first_name=user.first_name if user else None,
+            inquiry=inquiry_for_log,
+            response=reply.text,
+            latency_ms=reply.latency_ms,
+            model=reply.model,
+        ))
+        for item in reply.unknown_items:
+            sheets.log_pending_item(conv_id, item, inquiry_for_log[:500])
+
+    _log_local({
+        "conv_id": conv_id,
+        "chat_id": chat.id if chat else None,
+        "user_id": user.id if user else None,
+        "username": user.username if user else None,
+        "inquiry": inquiry_for_log,
+        "response": reply.text,
+        "latency_ms": reply.latency_ms,
+        "unknown_items": reply.unknown_items,
+        "photo": True,
+    })
+
+
 # ─── /correct in admin group → trigger AI proposal ───────────────────────
 
 async def cmd_correct(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -787,6 +943,83 @@ async def cmd_reload_kb(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     )
 
 
+async def cmd_diag(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Diagnostic command — shows env vars, secret files, Sheet connectivity.
+
+    Admin-only. Designed so Bapak (operator) can spot misconfig from Telegram
+    instead of digging through Render logs.
+    """
+    if not _whitelist_guard(update):
+        return
+    user = update.effective_user
+    if not user or not config.is_admin(user.id):
+        return
+
+    state: BotState = context.application.bot_data["state"]
+    client: ClaudeClient = context.application.bot_data["claude"]
+    sheets: SheetsClient | None = context.application.bot_data.get("sheets")
+
+    # Env var status
+    env_status = []
+    env_status.append(("TELEGRAM_BOT_TOKEN", "✓" if config.TELEGRAM_BOT_TOKEN else "✗"))
+    env_status.append(("ANTHROPIC_API_KEY", "✓" if config.ANTHROPIC_API_KEY else "✗"))
+    env_status.append(("ANTHROPIC_MODEL", config.ANTHROPIC_MODEL))
+    env_status.append(("ANTHROPIC_MODEL_FAST", config.ANTHROPIC_MODEL_FAST))
+    env_status.append(("ENVIRONMENT", config.ENVIRONMENT))
+    env_status.append(("MARKETING_CHAT_IDS", str(len(config.MARKETING_CHAT_IDS))))
+    env_status.append(("ADMIN_CHAT_IDS", str(len(config.ADMIN_CHAT_IDS))))
+    env_status.append(("ADMIN_USER_IDS", str(len(config.ADMIN_USER_IDS))))
+    env_status.append(("BOT_USERNAME", config.BOT_USERNAME))
+    env_status.append(("GSHEET_ID", "✓ set" if config.GSHEET_ID else "✗ MISSING"))
+    env_status.append((
+        "credentials file",
+        "✓ exists" if config.GOOGLE_CREDENTIALS_FILE.exists() else "✗ MISSING",
+    ))
+    env_status.append(("KB_REFRESH_SECONDS", str(config.KB_REFRESH_SECONDS)))
+
+    # Sheet connectivity check (try a cheap read)
+    sheet_status = "✗ DISABLED (CSV fallback)"
+    kb_count = "?"
+    if sheets is not None:
+        try:
+            rows = sheets.get_kb_rows()
+            kb_count = str(len(rows))
+            sheet_status = f"✓ ONLINE (sheet={sheets._sheet.title})"
+        except Exception as exc:
+            sheet_status = f"⚠️ ERROR: {exc}"
+
+    # In-memory state
+    state_lines = [
+        f"In-memory conversations: {len(state.conversations)}",
+        f"In-memory proposals: {len(state.proposals)}",
+        f"Paused: {state.paused}",
+    ]
+
+    lines = ["*🔍 BOT DIAGNOSTIC*", ""]
+    lines.append("*Sheets backend:*")
+    lines.append(f"  {sheet_status}")
+    lines.append(f"  KB rows: {kb_count}")
+    lines.append("")
+    lines.append("*Env vars:*")
+    for k, v in env_status:
+        lines.append(f"  `{k}` : {v}")
+    lines.append("")
+    lines.append("*Runtime:*")
+    for l in state_lines:
+        lines.append(f"  {l}")
+
+    if not config.GSHEET_ID or not config.GOOGLE_CREDENTIALS_FILE.exists():
+        lines.append("")
+        lines.append("⚠️ *FIX NEEDED:*")
+        if not config.GSHEET_ID:
+            lines.append("  - Set `GSHEET_ID` env var di Render dashboard")
+        if not config.GOOGLE_CREDENTIALS_FILE.exists():
+            lines.append("  - Upload `service_account.json` as Secret File di Render")
+        lines.append("  Detail di MORNING_CHECKLIST.md.")
+
+    await _send_long(context.bot, update.effective_chat.id, "\n".join(lines))
+
+
 async def cmd_today(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Admin command: rekap inquiry hari ini — baca dari Sheet conversations tab.
 
@@ -928,11 +1161,16 @@ def build_application(sheets_client: SheetsClient | None = None) -> Application:
     app.add_handler(CommandHandler("kb_add", cmd_kb_add))
     app.add_handler(CommandHandler("correct", cmd_correct))
     app.add_handler(CommandHandler("today", cmd_today))
+    app.add_handler(CommandHandler("diag", cmd_diag))
 
     app.add_handler(CallbackQueryHandler(on_feedback_button, pattern=r"^fb:"))
     app.add_handler(CallbackQueryHandler(on_proposal_button, pattern=r"^pr:"))
 
-    # Mention handler is DISABLED — bot only responds to slash commands.
+    # Photo handler — only fires if caption starts with /quote or contains @bot.
+    # Plain photos without trigger are silently ignored (cost discipline).
+    app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
+
+    # Mention handler (TEXT) is DISABLED — bot only responds to slash commands.
     # This is intentional: save Claude API costs by requiring explicit /quote.
 
     return app
