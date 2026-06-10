@@ -1,29 +1,50 @@
 # IP Marketing Bot
 
-Telegram bot AI Agent untuk tim marketing **Import Partner**. Bot terima inquiry di grup Telegram, generate response 2-layer (UNTUK MARKETING + FORWARD-READY), log semuanya ke Google Sheets, dan support feedback loop dari admin (Alvin + Jenny + Hanzel) supaya knowledge base makin pintar dari waktu ke waktu.
+Telegram bot AI klasifikator untuk tim marketing **Import Partner**. Bot terima inquiry (text atau **foto produk**) dari grup IP Marketing, klasifikasi tier + harga + container + HS code, mirror ke grup admin dengan feedback buttons, dan support AI-mediated KB update (Sonnet propose, Haiku verify, admin approve, auto-sync ke Sheet).
+
+**Status:** deployed di Render.com (Singapore, Background Worker). See `PROJECT_STATUS.md` for the current state and `MORNING_CHECKLIST.md` for operator runbook.
 
 ## Architecture
 
 ```
-Telegram grup
-    ↓
-Bot (polling)
-    ↓
-Claude Sonnet 4.6
-    ↓
-Google Sheet: 4 tab
-    ├─ knowledge_base    (source of truth, editable)
-    ├─ conversations     (auto-log tiap inquiry)
-    ├─ pending_items     (auto-flag item belum di-KB)
-    └─ feedback_log      (semua rating + koreksi dari admin)
+Marketing group         ──text or photo /quote──►   Bot (Render polling)
+                                                            ↓
+                                                    Claude Sonnet 4.6 (vision-capable)
+                                                            ↓
+                                                4-line response: Klasifikasi/Harga/Container/HS Code
+                                                            ↓
+                                          Marketing group  ◄────── reply
+                                                  +
+                                          Admin group   ◄────── mirror with 👍👎📝 buttons
+                                                            ↓
+                                          /correct → Haiku propose KB row → admin ✅ → Sheet auto-update
+                                                                                              ↓
+                                                                                       Bot reload + send
+                                                                                       "🔄 KOREKSI" back
+                                                                                       to Marketing as reply
 ```
 
-KB di-cache 10 menit. Admin bisa paksa refresh dengan `/reload_kb`.
+Google Sheet has 4 tabs (knowledge_base, conversations, pending_items, feedback_log). KB cached 10 minutes; force refresh with `/reload_kb`.
 
-## Phase
+## Output format (current)
 
-- **Phase 1 (Hari 1-10):** Internal validation. Whitelist 1 grup. Bot reply hanya kalau di-mention atau `/quote`.
-- **Phase 2 (Hari 11+):** Production ke grup marketing.
+```
+Klasifikasi : Lartas Ringan
+Harga       : Rp 6.000.000/CBM
+Container   : Umum
+HS Code     : 9503
+
+Note: SNI Mainan wajib (Permenperin 24/2013).
+```
+
+Tone "kak" (gender-neutral), to-the-point, no questions back to customer.
+
+## Phase progression
+
+- **Phase 1** (done): build core bot, single group, 2-layer response
+- **Phase 2** (done): two-group mirror, AI feedback loop, container column, classifier role shift, master prompt v2, Lartas Ringan rename, volume discount, Render deploy
+- **Phase 3** (done): data merge (file 8 prices), production deploy
+- **Phase 4** (in progress, overnight): vision support, KB additions, prompt polish, new admin commands
 
 ## Setup — Google Cloud (sekali aja)
 
